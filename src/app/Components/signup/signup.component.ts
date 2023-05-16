@@ -52,7 +52,6 @@ export class SignupComponent implements OnInit{
             this.router.navigate(['login']);
           },
           error:(err)=>{
-            console.log(err);
             this.alert.error({detail:"ERROR",summary:err?.message, duration:5000});
             }
           })

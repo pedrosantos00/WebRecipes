@@ -34,7 +34,6 @@ export class UserService {
   }
 
   remove(id : number){
-    console.log(id)
     return this.http.delete<any>(`${this.baseUrl}/${id}`);
   }
 

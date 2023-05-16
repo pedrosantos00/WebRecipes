@@ -15,7 +15,7 @@ export class NavbarComponent implements OnInit {
   isLoggedIn? : boolean;
   role? : string;
   userId? : number;
-  userImage!: string;
+  userImage?: string;
 
   constructor(private auth : AuthService , private alert : NgToastService , private tokenService : UserStoreService, private userService : UserService)
   {
@@ -27,8 +27,11 @@ export class NavbarComponent implements OnInit {
     this.isLoggedIn = this.auth.isLoggedIn();
     this.role = this.getRole();
     this.userId = this.getUser();
-    this.getUserImage(this.userId);
-    console.log()
+    if(this.isLoggedIn)
+    {
+      this.userImage = this.getUserImage(this.userId);
+    }
+
   }
 
   getUser(){
@@ -37,7 +40,10 @@ export class NavbarComponent implements OnInit {
     .subscribe(val => {
       let idFromToken = this.auth.getIdFromToken();
       id = val || idFromToken
+
     })
+
+
     return id;
   }
 
@@ -58,7 +64,7 @@ export class NavbarComponent implements OnInit {
     window.location.reload();
   }
 
-  getUserImage(id: number) {
+  getUserImage(id: number) : any {
     this.userService.getUserImage(id)
       .then((imageData: string) => {
         this.userImage = imageData;

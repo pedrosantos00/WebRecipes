@@ -24,7 +24,6 @@ export class MainPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.mainRoute = this.checkMainRoute();
-    console.log(this.mainRoute + this.router.url)
     this.isLoggedIn = this.auth.isLoggedIn();
 
     this.userId = this.getUser();
@@ -33,6 +32,8 @@ export class MainPageComponent implements OnInit {
     .subscribe(val => {
       this.user = val ;
     })
+
+
   }
 
   getUser(){

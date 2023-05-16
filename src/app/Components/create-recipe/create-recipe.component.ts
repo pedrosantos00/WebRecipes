@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgToastService } from 'ng-angular-popup';
 import { Ingredient } from 'src/app/Models/Ingredient';
 import { Recipe } from 'src/app/Models/Recipe';
 import { Step } from 'src/app/Models/Step';
@@ -20,10 +21,10 @@ export class CreateRecipeComponent implements OnInit {
   ingredients: FormArray;
   steps: FormArray;
   userId: number = 0;
-  selectedFile!: File;
+  selectedFile!: any;
 
 
-  constructor(private fb: FormBuilder, private recipeService : RecipeService,private tokenHelper : UserStoreService, private auth : AuthService) {
+  constructor(private fb: FormBuilder, private recipeService : RecipeService,private tokenHelper : UserStoreService, private auth : AuthService, private alert: NgToastService) {
     this.recipeForm = this.fb.group({
       title: ['', Validators.required],
       estimatedTime: [''],
@@ -79,7 +80,11 @@ export class CreateRecipeComponent implements OnInit {
   }
 
   onFileSelected(event: any): void {
-    this.selectedFile = event.target.files[0];
+    this.selectedFile = (event.target as HTMLInputElement).files?.[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+      };
+      reader.readAsDataURL(this.selectedFile);
   }
 
 
@@ -97,16 +102,15 @@ export class CreateRecipeComponent implements OnInit {
 
   onSubmit(): void {
     const recipe = this.recipeForm.value;
-    console.log(recipe)
     recipe.tags = this.tagsArray;
+    recipe.picture = this.selectedFile;
     this.recipeService.createRecipe(recipe,this.userId).subscribe(
     (response) => {
-      console.log(response);
+      this.alert.success({detail:"SUCCESS",summary:response?.message, duration:5000});
       // Handle success
-      window.location.reload();
     },
     (error) => {
-      console.log(error);
+      this.alert.error({detail:"ERROR",summary:error?.message, duration:5000});
       // Handle error
     }
   );

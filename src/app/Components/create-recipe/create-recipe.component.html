@@ -39,7 +39,7 @@
 
           <div class="col-12 col-md-4">
             <label for="image">Image</label>
-            <input type="file" class="form-control-file" formControlName="img">
+            <input type="file" #fileInput (change)="onFileSelected($event)">
           </div>
         </div>
 

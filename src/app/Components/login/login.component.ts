@@ -62,8 +62,10 @@ ngOnInit(): void
             const tokenPayload = this.auth.decodedToken();
             this.user.setFullName(tokenPayload.unique_name);
             this.user.setRole(tokenPayload.role);
+            this.user.setId(tokenPayload.id)
             this.alert.success({detail:"SUCCESS",summary:res.message, duration:5000});
             this.router.navigate(['']);
+
           },
             error:(err)=>{
               this.alert.error({detail:"ERROR",summary:err?.message, duration:5000});

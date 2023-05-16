@@ -67,7 +67,6 @@ goToDashBoard(){
 updateUserData(){
   let response ;
     if(this.profileForm.value != "") {
-      console.log(this.profileForm.value)
     this.userService.updateUser(this.user.id, this.profileForm.value)
     .subscribe({
       next:(res)=>{
@@ -75,7 +74,6 @@ updateUserData(){
         this.alert.success({detail:"SUCCESS",summary:res?.message, duration:5000})
     },
     error:(err)=>{
-      console.log(err);
       this.alert.error({detail:"ERROR",summary:err?.message, duration:5000});
       }
     })
@@ -121,7 +119,6 @@ updateUserData(){
               });
             },
             error => {
-              console.log(error);
               this.alert.error({ detail: "ERROR", summary: "Failed to update picture.", duration: 5000 });
             }
           );
