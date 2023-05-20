@@ -1,5 +1,5 @@
 export class Step {
-  id?: number;
-  StepName?: string;
-  StepDescription?: string;
+  id!: number;
+  stepId! : number;
+  stepDescription!: string;
 }

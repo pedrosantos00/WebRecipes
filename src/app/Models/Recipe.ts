@@ -2,6 +2,9 @@ import {User} from './User';
 import {Ingredient} from './Ingredient';
 import {Step} from './Step';
 import {Tag} from './Tag';
+import {Comment} from './Comment';
+import { favoritedBy } from './favoritedBy';
+
 
 
 export class Recipe {
@@ -19,5 +22,5 @@ export class Recipe {
   ingredients!: Ingredient[];
   steps!: Step[];
   comments!: Comment[];
-  favoritedBy!: User[];
+  favoritedBy?: favoritedBy[]
 }

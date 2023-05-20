@@ -1,4 +1,5 @@
 import { Recipe } from "./Recipe";
+import { favoritedBy } from "./favoritedBy";
 
 export class User {
 

@@ -20,6 +20,8 @@ import { CreateRecipeComponent } from './Components/create-recipe/create-recipe.
 import { RecipesComponent } from './Components/recipes/recipes.component';
 import { PendentRecipesComponent } from './Components/admin-dashboard/pendent-recipes/pendent-recipes.component';
 import { FilterRecipePipe } from './Pipes/filter-recipe.pipe';
+import { RecipeComponent } from './Components/recipe/recipe.component';
+import { FavListComponent } from './Components/profile/fav-list/fav-list.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { FilterRecipePipe } from './Pipes/filter-recipe.pipe';
     CreateRecipeComponent,
     RecipesComponent,
     PendentRecipesComponent,
-    FilterRecipePipe
+    FilterRecipePipe,
+    RecipeComponent,
+    FavListComponent
 
 
   ],

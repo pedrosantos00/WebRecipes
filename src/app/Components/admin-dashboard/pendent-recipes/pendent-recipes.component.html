@@ -1,10 +1,10 @@
 <div  class="album py-5 bg-body-tertiary">
   <div class="container">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-      <div *ngFor="let recipe of Recipes" class="col">
+      <div *ngFor="let recipe of recipes" class="col">
         <a class="card-link">
           <div *ngIf="!recipe.aprooved" class="card shadow-sm recipe-card">
-            <img [src]="convertDataToBase64(recipe.img)" class="card-img-top" alt="Recipe Photo">
+            <img [src]="recipe.img" class="card-img-top" alt="Recipe Photo">
             <div class="card-body">
               <div *ngIf="recipe.description < 9 else readMore">
                 <h5 class="card-title">{{recipe.title}}</h5>

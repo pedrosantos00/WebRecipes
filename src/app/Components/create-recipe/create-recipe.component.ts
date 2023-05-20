@@ -43,6 +43,7 @@ export class CreateRecipeComponent implements OnInit {
   ngOnInit(): void {
 
     this.userId = this.getUser();
+
   }
 
 
@@ -65,9 +66,20 @@ export class CreateRecipeComponent implements OnInit {
   }
 
   createStep(): FormGroup {
-    return this.fb.group({
-      stepDescription: ['', Validators.required]
-    });
+    try{
+      const stepIndex = this.steps.length;
+      const stepId = stepIndex + 1;
+      return this.fb.group({
+        stepId: stepId,
+        stepDescription: ['', Validators.required]
+      });
+    }
+    catch{
+     return this.fb.group({
+        stepId: 1,
+        stepDescription: ['', Validators.required]
+      });
+    }
   }
 
   addIngredient(): void {

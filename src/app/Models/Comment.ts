@@ -1,5 +1,8 @@
+import { User } from "./User";
+
 export class Comment {
-  id?: number;
+  text?: string;
   name?: string;
-  email?: string;
+  userId? : number;
+  createdDate? : Date;
 }

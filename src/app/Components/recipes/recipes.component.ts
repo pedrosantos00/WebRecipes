@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Recipe } from 'src/app/Models/Recipe';
 import { User } from 'src/app/Models/User';
+import { favoritedBy } from 'src/app/Models/favoritedBy';
 import { RecipeService } from 'src/app/Services/recipe.service';
 
 @Component({
@@ -11,17 +13,36 @@ import { RecipeService } from 'src/app/Services/recipe.service';
 export class RecipesComponent implements OnInit {
 
   @Input() userId!: number;
-
+ @Input() profileUserId!: number;
  //PIPES
  @Input() filteredValue!: '';
 
   recipes: any;
-  constructor(private recipeService: RecipeService){
+  constructor(private recipeService: RecipeService, private router: Router){
 
   }
 
     ngOnInit(): void {
-       this.loadRecipes();
+      if(this.profileUserId == 0 || this.profileUserId == undefined || this.profileUserId == null) {
+        this.loadRecipes();
+      }
+      else {
+        this.userId = this.profileUserId
+        this.loadPersonalRecipes(this.profileUserId);
+      }
+
+    }
+
+    async loadPersonalRecipes(profileUserId : number): Promise<void> {
+      try {
+        console.log(profileUserId)
+        const res = await this.recipeService.getRecipesByUserId(profileUserId).toPromise();
+        console.log(res)
+        this.recipes = res;
+        this.convertImg(this.recipes);
+      } catch (error) {
+        console.error('Error loading recipes:', error);
+      }
     }
 
 
@@ -46,15 +67,26 @@ export class RecipesComponent implements OnInit {
 
 
     addOrRemoveToFavourite(recipeId : number){
-      console.log(recipeId);
+
       this.recipeService.addOrRemoveFavRecipe(recipeId,this.userId)
       .subscribe(
         () => {
-
+           this.loadRecipes();
         },
         error => {
+
         }
       );
+      console.log(recipeId);
+    }
+
+    isFavorited(favoritedBy: favoritedBy[], userId: number): boolean {
+      return favoritedBy.some((favorite) => favorite.userId === userId);
+    }
+
+    gotoRecipe(recipeId: number){
+      console.log(recipeId)
+      this.router.navigate(['/v'] , { queryParams: { recipe : recipeId } })
     }
 
   convertDataToBase64(base64Data: string): string {

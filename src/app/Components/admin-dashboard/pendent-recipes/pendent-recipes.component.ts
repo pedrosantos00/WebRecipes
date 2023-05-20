@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Recipe } from 'src/app/Models/Recipe';
 import { RecipeService } from 'src/app/Services/recipe.service';
 
 @Component({
@@ -8,32 +9,49 @@ import { RecipeService } from 'src/app/Services/recipe.service';
 })
 export class PendentRecipesComponent implements OnInit{
 
-  Recipes: any;
+  recipes: any;
   constructor(private recipeService: RecipeService){
 
   }
 
 
-ngOnInit(): void {
-       this.recipeService.getRecipe()
-       .subscribe(res =>{
-         this.Recipes = res;
-       });
+  ngOnInit(): void {
+    this.loadRecipes();
+ }
 
 
-    }
 
-  convertDataToBase64(base64Data: string): string {
-    const byteCharacters = atob(base64Data);
-    const byteNumbers = new Array(byteCharacters.length);
-    for (let i = 0; i < byteCharacters.length; i++) {
-      byteNumbers[i] = byteCharacters.charCodeAt(i);
-    }
-    const byteArray = new Uint8Array(byteNumbers);
-    const blob = new Blob([byteArray], { type: 'image/jpeg' });
-    const urlCreator = window.URL || window.webkitURL;
-    return urlCreator.createObjectURL(blob);
-  }
+ async loadRecipes(): Promise<void> {
+   try {
+     const res = await this.recipeService.getRecipeToAproove().toPromise();
+     console.log(res)
+     this.recipes = res;
+     this.convertImg(this.recipes);
+   } catch (error) {
+     console.error('Error loading recipes:', error);
+   }
+ }
+
+ convertImg(recipes : Recipe[]) {
+   recipes.forEach(element => {
+     console.log(element)
+   element.img = this.convertDataToBase64(element.img);
+  });
+ }
+
+
+
+convertDataToBase64(base64Data: string): string {
+ const byteCharacters = atob(base64Data);
+ const byteNumbers = new Array(byteCharacters.length);
+ for (let i = 0; i < byteCharacters.length; i++) {
+   byteNumbers[i] = byteCharacters.charCodeAt(i);
+ }
+ const byteArray = new Uint8Array(byteNumbers);
+ const blob = new Blob([byteArray], { type: 'image/jpeg' });
+ const urlCreator = window.URL || window.webkitURL;
+ return urlCreator.createObjectURL(blob);
+}
 
 
 }

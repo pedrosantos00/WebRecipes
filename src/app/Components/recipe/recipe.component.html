@@ -1,0 +1,84 @@
+
+  <div class="container recipe-container">
+    <div class="d-flex justify-content-end">
+      <button type="submit" class="btn btn-dark mt-2" (click)="goToDashBoard()"> < Back</button>
+    </div>
+    <h1>{{ recipe.title }}</h1>
+    <p>{{ recipe.description }}</p>
+    <img src="{{ recipe.img }}" alt="Recipe Image" class="recipe-image">
+
+    <div class="recipe-details">
+      <div class="icon-label">
+        <i class="fa fa-clock-o" aria-hidden="true"></i>
+        <span>{{ recipe.estimatedTime }} min</span>
+      </div>
+      <div class="icon-label">
+        <i class="fa fa-cutlery" aria-hidden="true"></i>
+        <span>{{ recipe.mealsPerRecipe }}</span>
+      </div>
+      <div class="rating-container">
+        <span class="rate-label">Rate:</span>
+        <div class="rating-stars">
+          <i class="fa fa-star-o" (mouseover)="handleMouseOver(2)" (mouseout)="handleMouseOut()" (click)="rate(1)"></i>
+          <i class="fa fa-star-o" (mouseover)="handleMouseOver(3)" (mouseout)="handleMouseOut()"(click)="rate(2)"></i>
+          <i class="fa fa-star-o" (mouseover)="handleMouseOver(4)" (mouseout)="handleMouseOut()"(click)="rate(3)"></i>
+          <i class="fa fa-star-o" (mouseover)="handleMouseOver(5)" (mouseout)="handleMouseOut()"(click)="rate(4)"></i>
+          <i class="fa fa-star-o" (mouseover)="handleMouseOver(6)" (mouseout)="handleMouseOut()"(click)="rate(5)"></i>
+        </div>
+      </div>
+      <div class="icon-label">
+        <i class="fa fa-trophy" aria-hidden="true"></i>
+        <span>Difficulty: {{ recipe.difficulty }}</span>
+      </div>
+    </div>
+
+    <div class="recipe-tags">
+      <h5>Tags:</h5>
+      <ul>
+        <li *ngFor="let tag of recipe.tags">{{ tag.tagName }}</li>
+      </ul>
+    </div>
+
+    <div class="recipe-ingredients">
+      <h3>Ingredients:</h3>
+      <ul>
+        <li *ngFor="let ingredient of recipe.ingredients">
+          <i class="fa fa-check"></i> {{ ingredient.name }} - {{ ingredient.quantity }} {{ ingredient.quantityType }}
+        </li>
+      </ul>
+    </div>
+
+    <div class="recipe-steps">
+      <h3>Steps:</h3>
+      <ol class="list-group">
+        <li class="step-item list-group-item" *ngFor="let step of recipe.steps">
+          <i class="fa fa-check-circle"></i> <b>{{ step.stepId }}</b>: {{ step.stepDescription }}
+        </li>
+      </ol>
+    </div>
+
+    <div class="recipe-comments">
+      <h3>Comments:</h3>
+      <ul class="list-group">
+        <li class="comment-item list-group-item" *ngFor="let comment of recipe.comments">
+          <div class="comment-header">
+            <b>{{ comment.name }}</b>
+          </div>
+          <span class="comment-date">{{ comment.createdDate | date:'dd/MM/yyyy'}}</span>
+          <div class="comment-text">{{ comment.text }}</div>
+        </li>
+      </ul>
+    </div>
+
+
+    <div *ngIf="isLoggedIn" class="comment-form">
+      <form>
+        <div class="form-group">
+          <textarea class="form-control" id="comment" rows="2" placeholder="Enter your comment"></textarea>
+        </div>
+        <div class="d-flex justify-content-end">
+          <button type="submit" class="btn btn-dark mt-2" (click)="sendCommentary()">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>

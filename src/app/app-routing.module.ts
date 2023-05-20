@@ -7,6 +7,7 @@ import { ProfileComponent } from './Components/profile/profile.component';
 import { AdminDashboardComponent } from './Components/admin-dashboard/admin-dashboard.component';
 import { EditUserComponent } from './Components/admin-dashboard/edit-user/edit-user.component';
 import { AuthGuard } from './Guards/auth.guard';
+import { RecipeComponent } from './Components/recipe/recipe.component';
 
 
 const routes: Routes = [
@@ -19,7 +20,8 @@ const routes: Routes = [
   {path:'', component: MainPageComponent , children :[
     {path:'profile', component: ProfileComponent ,canActivate:[AuthGuard],data: { expectedRole: ['Admin', 'User'] }},
     {path: 'admin' , component: AdminDashboardComponent,canActivate:[AuthGuard],data: { expectedRole: 'Admin' }},
-    {path:'admin/edit', component: EditUserComponent,canActivate:[AuthGuard], data: { expectedRole: 'Admin' }}
+    {path:'admin/edit', component: EditUserComponent,canActivate:[AuthGuard], data: { expectedRole: 'Admin' }},
+    {path:'v', component: RecipeComponent}
   ]},
 
 ];
