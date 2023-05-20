@@ -8,7 +8,7 @@ export class Recipe {
   id!: number;
   title!: string;
   description!: string;
-  img!: ArrayBuffer;
+  img!: any;
   estimatedTime!: number;
   difficulty!: string;
   mealsPerRecipe!: number;

@@ -12,6 +12,7 @@ import { UserService } from 'src/app/Services/user.service';
 })
 export class MainPageComponent implements OnInit {
 
+  filteredValue! : '';
   mainRoute?: boolean;
   isLoggedIn?: boolean;
   recipeFlag?: boolean;
@@ -28,11 +29,11 @@ export class MainPageComponent implements OnInit {
 
     this.userId = this.getUser();
 
+
     this.userService.getUser(this.userId)
     .subscribe(val => {
       this.user = val ;
     })
-
 
   }
 

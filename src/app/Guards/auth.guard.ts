@@ -48,10 +48,6 @@ export class AuthGuard implements CanActivate {
     } else if (this.role === expectedRole) {
       return true;
     }
-
-    console.log(expectedRole);
-    console.log(this.role);
-    this.toast.error({detail: 'Error', summary: '', duration: 5000});
     this.router.navigate(['']);
     return false;
   }

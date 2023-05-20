@@ -6,17 +6,23 @@
       <form (ngSubmit)="onSubmit()" [formGroup]="recipeForm">
         <div class="form-group">
           <label for="title">Title</label>
-          <input type="text" class="form-control" formControlName="title"  placeholder="e.g. Pancakes" required >
+          <small style="color: red;">*</small>
+          <input type="text" class="form-control" formControlName="title" placeholder="e.g. Pancakes" required
+            maxlength="38">
+
         </div>
 
         <div class="form-group row">
           <div class="col-12 col-md-6">
             <label for="time">Estimated Time (mins)</label>
+            <small style="color: red;">*</small>
+
             <input type="number" class="form-control" formControlName="estimatedTime" placeholder="e.g. 120">
           </div>
 
           <div class="col-12 col-md-6">
             <label for="difficulty">Difficulty</label>
+            <small style="color: red;">*</small>
             <select class="form-control" formControlName="difficulty">
               <option value="">-- Select --</option>
               <option value="Easy">Easy</option>
@@ -28,39 +34,51 @@
 
         <div class="form-group">
           <label for="description">Description</label>
-          <textarea class="form-control" formControlName="description" rows="4" placeholder="e.g. Tasty pancakes "required></textarea>
+          <small style="color: red;">*</small>
+          <textarea class="form-control" formControlName="description" rows="4" placeholder="e.g. Tasty pancakes "
+            required minlength="8"></textarea>
+
         </div>
 
         <div class="form-group row">
           <div class="col-12 col-md-6">
             <label for="meals">Meals per Recipe</label>
+            <small style="color: red;">*</small>
             <input type="number" class="form-control" formControlName="mealsPerRecipe">
           </div>
 
           <div class="col-12 col-md-4">
             <label for="image">Image</label>
+            <small style="color: red;">*</small>
             <input type="file" #fileInput (change)="onFileSelected($event)">
           </div>
         </div>
 
         <div class="form-group">
-          <label for="tags">Tags</label>
-          <input type="text" class="form-control" formControlName="tags" placeholder="breakfast,healthy,pancakes,vegan ">
-          <small class="form-text text-muted">Separate tags with commas -> e.g : breakfast,healthy,pancakes,vegan</small>
+          <label for="tags">Categories / Tags</label>
+          <input type="text" class="form-control" formControlName="tags"
+            placeholder="breakfast,healthy,pancakes,vegan ">
+          <small class="form-text text-muted">Separate Categories/tags with commas -> e.g :
+            breakfast,healthy,pancakes,vegan</small>
         </div>
 
         <div class="form-group">
           <label for="ingredients">Ingredients</label>
+          <small style="color: red;">*</small>
           <div formArrayName="ingredients">
-            <div class="ingredient-field row" *ngFor="let ingredient of ingredients.controls; let i = index" [formGroupName]="i">
+            <div class="ingredient-field row" *ngFor="let ingredient of ingredients.controls; let i = index"
+              [formGroupName]="i">
               <div class="col-12 col-md-4">
-                <input type="text" class="form-control" formControlName="name" placeholder="Ingredient Name e.g. Sugar" required>
+                <input type="text" class="form-control" formControlName="name" placeholder="Ingredient Name e.g. Sugar"
+                  required>
               </div>
               <div class="col-12 col-md-4">
-                <input type="text" class="form-control" formControlName="quantity" placeholder="Quantity e.g. '120'" required>
+                <input type="text" class="form-control" formControlName="quantity" placeholder="Quantity e.g. '120'"
+                  required>
               </div>
               <div class="col-12 col-md-4">
-                <input type="text" class="form-control" formControlName="quantityType" placeholder="Quantity Type e.g. 'gram' " required>
+                <input type="text" class="form-control" formControlName="quantityType"
+                  placeholder="Quantity Type e.g. 'gram' " required>
               </div>
             </div>
           </div>
@@ -68,18 +86,22 @@
         </div>
         <div class="form-group">
           <label for="steps">Steps</label>
+          <small style="color: red;">*</small>
           <div formArrayName="steps">
             <div class="step-field row" *ngFor="let step of steps.controls; let i = index" [formGroupName]="i">
               <div class="col-12 col-md-1 text-center step-number">{{ i + 1 }}</div>
               <div class="col-12 col-md-11">
-                <textarea class="form-control" formControlName="stepDescription" rows="3" placeholder="Step description" required></textarea>
+                <textarea class="form-control" formControlName="stepDescription" rows="3" placeholder="Step description"
+                  required></textarea>
               </div>
             </div>
           </div>
           <button type="button" class="btn btn-secondary btn-sm mt-2" (click)="addStep()">Add Step</button>
         </div>
+
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
     </div>
+    <small style="color: red;">* required data</small>
   </div>
 </div>

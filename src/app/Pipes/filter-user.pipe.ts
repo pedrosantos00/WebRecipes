@@ -13,13 +13,15 @@ export class FilterUserPipe implements PipeTransform {
     let users = [];
     for(let user of values)
     {
-      if (user.firstName.toLowerCase() == search.toLowerCase()
-        || user.lastName.toLowerCase()  == search.toLowerCase()
-        || user.fullName.toLowerCase()  == search.toLowerCase()
-        || user.id == search
-        || user.email.toLowerCase() == search.toLowerCase()
+      if (
+        (user.firstName && user.firstName.toLowerCase().includes(search.toLowerCase()))
+        ||(user.lastName && user.lastName.toLowerCase().includes(search.toLowerCase()))
+        || (user.fullName && user.fullName.toLowerCase().includes(search.toLowerCase()))
+        ||(user.email && user.email.toLowerCase().includes(search.toLowerCase()))
         || user.isBlocked.toString() == search.toLowerCase()
-        || user.role.toLowerCase() == search.toLowerCase()
+        ||(user.role && user.role.toLowerCase().includes(search.toLowerCase()))
+        || user.id == search
+
         ) {
           users.push(user);
       }

@@ -1,21 +1,15 @@
-<head><script src="../assets/js/color-modes.js"></script>
-
+<head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-  <meta name="generator" content="Hugo 0.111.3">
+  <meta name="description" content="Recipe Website for CODE DEV 2023">
+  <meta name="author" content="Pedro Santos">
   <title>teste</title>
-
-  <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/album/">
-
 </head>
 <body>
 
   <!-- Header Component -->
 <app-navbar  ></app-navbar>
 <router-outlet></router-outlet>
-
 
 <main *ngIf="mainRoute">
 
@@ -38,7 +32,7 @@
         </div>
       </div>
       <div class="input-group mb-3">
-        <input type="text" class="form-control" style="width: 50vh;" aria-describedby="emailHelp" placeholder="Search for Name, category, tags or recipe autor">
+        <input type="text" class="form-control" style="width: 50vh;" aria-describedby="emailHelp" placeholder="Search for Name, category, tags or recipe autor" [(ngModel)]="filteredValue">
         <button class="btn btn-outline-primary" type="button">Search</button>
       </div>
 
@@ -49,131 +43,7 @@
   <app-create-recipe></app-create-recipe>
 </section>
 
-<div class="album py-5 bg-body-tertiary">
-  <div class="container">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-      <div class="col">
-        <a href="https://food-images.files.bbci.co.uk/food/recipes/chargrilled_t-bone_steak_64791_16x9.jpg" class="card-link">
-          <div class="card shadow-sm recipe-card">
-            <img src="https://food-images.files.bbci.co.uk/food/recipes/chargrilled_t-bone_steak_64791_16x9.jpg" class="card-img-top" alt="Recipe Photo">
-            <div class="card-body">
-              <h5 class="card-title">chargrilled T-bone steak</h5>
-              <p class="card-text">James Martin shows how to cook the perfect T-bone steak in this easy-to-follow recipe.</p>
-              <div class="row">
-                <div class="col">
-                  <div class="recipe-details">
-                    <span class="recipe-time"><i class="fa fa-clock-o"></i> 30 mins</span>
-                  </div>
-                </div>
-                <div class="col-auto">
-                  <div class="recipe-difficulty">
-                    <span class="difficulty-icon"><i class="fa fa-fire"> Hard</i></span>
-                  </div>
-                </div>
-              </div>
-              <div class="row mt-2">
-                <div class="col">
-                  <div class="recipe-rate">
-                    <span class="star"><i class="fa fa-star"></i></span>
-                    <span class="rate-value">3.5</span>
-                  </div>
-                </div>
-                <div class="col-auto">
-                  <div class="recipe-difficulty">
-                    <span class="difficulty-icon"><i class="fa fa-cutlery"> 2 pax</i></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </a>
-      </div>
-
-
-      <div class="col">
-        <a href="recipe-link.html" class="card-link">
-          <div class="card shadow-sm recipe-card">
-            <img src="https://www.teleculinaria.pt/wp-content/uploads/2016/09/Bacalhau-com-natas-e-delicias-do-mar-6_V2.jpg" class="card-img-top" alt="Recipe Photo">
-            <div class="card-body">
-              <h5 class="card-title">Cod with Cream – Bacalhau com Natas</h5>
-              <p class="card-text">Bacalhau com Natas (Cod with cream) is one of the most classic cod dishes in Portugal. A simple and delicious recipe, perfect for family lunch.</p>
-              <div class="row">
-                <div class="col">
-                  <div class="recipe-details">
-                    <span class="recipe-time"><i class="fa fa-clock-o"></i> 45 mins</span>
-                  </div>
-                </div>
-                <div class="col-auto">
-                  <div class="recipe-difficulty">
-                    <span class="difficulty-icon"><i class="fa fa-fire"> easy</i></span>
-                  </div>
-                </div>
-              </div>
-              <div class="row mt-2">
-                <div class="col">
-                  <div class="recipe-rate">
-                    <span class="star"><i class="fa fa-star"></i></span>
-                    <span class="rate-value">3.5</span>
-                  </div>
-                </div>
-                <div class="col-auto">
-                  <div class="recipe-difficulty">
-                    <span class="difficulty-icon"><i class="fa fa-cutlery"> 4 pax</i></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </a>
-      </div>
-
-
-
-      <div class="col">
-        <a href="recipe-link.html" class="card-link">
-          <div class="card shadow-sm recipe-card">
-            <img src="https://www.errenskitchen.com/wp-content/uploads/2018/08/Spaghetti-Bolognese-1-3.jpg" class="card-img-top" alt="Recipe Photo">
-            <div class="card-body">
-              <h5 class="card-title">Quick & Easy Spaghetti Bolognese</h5>
-              <p class="card-text">With this Spaghetti Bolognese recipe, the technique of the Italian classic has been simplified so you can create a tasty meal in under 30 minutes. </p>
-              <div class="row">
-                <div class="col">
-                  <div class="recipe-details">
-                    <span class="recipe-time"><i class="fa fa-clock-o"></i> 30 mins</span>
-                  </div>
-                </div>
-                <div class="col-auto">
-                  <div class="recipe-difficulty">
-                    <span class="difficulty-icon"><i class="fa fa-fire"> Medium</i></span>
-                  </div>
-                </div>
-              </div>
-              <div class="row mt-2">
-                <div class="col">
-                  <div class="recipe-rate">
-                    <span class="star"><i class="fa fa-star"></i></span>
-                    <span class="rate-value">3.5</span>
-                  </div>
-                </div>
-                <div class="col-auto">
-                  <div class="recipe-difficulty">
-                    <span class="difficulty-icon"><i class="fa fa-cutlery"> 3 pax</i></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </a>
-      </div>
-
-
-
-
-
-    </div>
-  </div>
-</div>
-
+<app-recipes [userId]="userId" [filteredValue]="filteredValue"></app-recipes>
 </main>
 
 <footer class="text-body-secondary py-5">

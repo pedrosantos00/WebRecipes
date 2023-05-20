@@ -30,8 +30,8 @@ export class NavbarComponent implements OnInit {
     if(this.isLoggedIn)
     {
       this.userImage = this.getUserImage(this.userId);
-    }
 
+    }
   }
 
   getUser(){
@@ -61,7 +61,6 @@ export class NavbarComponent implements OnInit {
     this.auth.signOut();
     this.isLoggedIn = false;
     this.alert.success({detail:"Logout",summary:"Logout Success!", duration:5000});
-    window.location.reload();
   }
 
   getUserImage(id: number) : any {

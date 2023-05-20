@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgToastService } from 'ng-angular-popup';
 import { Ingredient } from 'src/app/Models/Ingredient';
 import { Recipe } from 'src/app/Models/Recipe';
@@ -24,14 +24,13 @@ export class CreateRecipeComponent implements OnInit {
   selectedFile!: any;
 
 
-  constructor(private fb: FormBuilder, private recipeService : RecipeService,private tokenHelper : UserStoreService, private auth : AuthService, private alert: NgToastService) {
+  constructor(private fb: FormBuilder, private recipeService: RecipeService, private tokenHelper: UserStoreService, private auth: AuthService, private alert: NgToastService) {
     this.recipeForm = this.fb.group({
       title: ['', Validators.required],
-      estimatedTime: [''],
-      difficulty: [''],
+      estimatedTime: ['', Validators.required],
+      difficulty: ['', Validators.required],
       description: ['', Validators.required],
-      mealsPerRecipe: [''],
-      img: [''],
+      mealsPerRecipe: ['', Validators.required],
       tags: [''],
       ingredients: this.fb.array([this.createIngredient()]),
       steps: this.fb.array([this.createStep()])
@@ -47,13 +46,13 @@ export class CreateRecipeComponent implements OnInit {
   }
 
 
-  getUser(){
+  getUser() {
     let id = 0;
-     this.tokenHelper.getId()
-    .subscribe(val => {
-      let idFromToken = this.auth.getIdFromToken();
-      id = val || idFromToken
-    })
+    this.tokenHelper.getId()
+      .subscribe(val => {
+        let idFromToken = this.auth.getIdFromToken();
+        id = val || idFromToken
+      })
     return id;
   }
 
@@ -80,11 +79,17 @@ export class CreateRecipeComponent implements OnInit {
   }
 
   onFileSelected(event: any): void {
-    this.selectedFile = (event.target as HTMLInputElement).files?.[0];
-      const reader = new FileReader();
-      reader.onload = () => {
-      };
-      reader.readAsDataURL(this.selectedFile);
+    const file: File = event.target.files[0];
+    const reader: FileReader = new FileReader();
+
+    reader.onload = () => {
+      const base64String: string | ArrayBuffer | null = reader.result as string | ArrayBuffer;
+      if (base64String) {
+        this.selectedFile = base64String.toString().split(',')[1]; // Extract the base64 string from the data URL
+      }
+    };
+
+    reader.readAsDataURL(file);
   }
 
 
@@ -93,26 +98,47 @@ export class CreateRecipeComponent implements OnInit {
   }
 
   get tagsArray(): Tag[] {
-  const tagsValue = this.tagsControl?.value;
-  return tagsValue
-    ? tagsValue.split(',').map((tag: string) => ({ id: 0, tagName: tag.trim() }))
-    : [];
-}
+    const tagsValue = this.tagsControl?.value;
+    return tagsValue
+      ? tagsValue.split(',').map((tag: string) => ({ id: 0, tagName: tag.trim() }))
+      : [];
+  }
 
 
   onSubmit(): void {
-    const recipe = this.recipeForm.value;
+    let recipe = this.recipeForm.value;
     recipe.tags = this.tagsArray;
-    recipe.picture = this.selectedFile;
-    this.recipeService.createRecipe(recipe,this.userId).subscribe(
-    (response) => {
-      this.alert.success({detail:"SUCCESS",summary:response?.message, duration:5000});
-      // Handle success
-    },
-    (error) => {
-      this.alert.error({detail:"ERROR",summary:error?.message, duration:5000});
-      // Handle error
+    recipe.img = this.selectedFile
+
+
+    if (this.recipeForm.valid) {
+      console.log(recipe)
+      this.recipeService.createRecipe(recipe, this.userId).subscribe(
+        (response) => {
+          this.alert.success({ detail: "SUCCESS", summary: response?.message, duration: 5000 });
+          window.location.reload();
+        },
+        (error) => {
+          this.alert.error({ detail: "ERROR", summary: error?.message, duration: 5000 });
+        }
+      );
     }
-  );
+    else {
+      this.validateAllFormFields(this.recipeForm);
+      this.alert.error({ detail: "ERROR", summary: "Fill all the required data", duration: 5000 });
+    }
   }
+
+  private validateAllFormFields(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(f => {
+      const control = formGroup.get(f);
+      if (control instanceof FormControl) {
+        control.markAsDirty({ onlySelf: true });
+      }
+      else if (control instanceof FormGroup) {
+        this.validateAllFormFields(control);
+      }
+    })
+  }
+
 }

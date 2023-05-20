@@ -19,7 +19,7 @@ export class AdminDashboardComponent implements OnInit{
   numUsers: number = 0;
 
   public selectedOption!: string;
-  public users: any = [];
+  public users!: any;
   public fullName : string = "";
   public role : string = "";
   public companyId : number = 0;
@@ -47,13 +47,12 @@ export class AdminDashboardComponent implements OnInit{
       this.role = val || roleFromToken
     })
 
-    this.api.getUser()
+     this.api.getUser()
     .subscribe(res =>{
       this.users = res;
     });
 
   }
-
 
 
   deleteUser(userId : number){

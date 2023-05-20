@@ -1,0 +1,48 @@
+<div  class="album py-5 bg-body-tertiary">
+  <div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      <div *ngFor="let recipe of Recipes" class="col">
+        <a class="card-link">
+          <div *ngIf="!recipe.aprooved" class="card shadow-sm recipe-card">
+            <img [src]="convertDataToBase64(recipe.img)" class="card-img-top" alt="Recipe Photo">
+            <div class="card-body">
+              <div *ngIf="recipe.description < 9 else readMore">
+                <h5 class="card-title">{{recipe.title}}</h5>
+                <p class="card-text" >{{recipe.description}}</p>
+              </div>
+              <ng-template #readMore>
+                <h5 class="card-title">{{recipe.title}}</h5>
+                <p class="card-text" >{{recipe.description | slice: 0:90}}... <a style="font-style: italic; color: blue;">read more</a></p>
+              </ng-template>
+              <div class="row">
+                <div class="col">
+                  <div class="recipe-details">
+                    <span class="recipe-time"><i class="fa fa-clock-o"></i> {{recipe.estimatedTime}} mins</span>
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <div class="recipe-difficulty">
+                    <span class="difficulty-icon"><i class="fa fa-fire"> {{recipe.difficulty}}</i></span>
+                  </div>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col">
+                  <div class="recipe-rate">
+                    <span class="star"><i class="fa fa-star"></i></span>
+                    <span class="rate-value"> {{recipe.rate}}</span>
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <div class="recipe-difficulty">
+                    <span class="difficulty-icon"><i class="fa fa-cutlery"> {{recipe.mealsPerRecipe}}</i></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

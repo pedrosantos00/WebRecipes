@@ -17,6 +17,9 @@ import { AdminDashboardComponent } from './Components/admin-dashboard/admin-dash
 import { EditUserComponent } from './Components/admin-dashboard/edit-user/edit-user.component';
 import { FilterUserPipe } from './Pipes/filter-user.pipe';
 import { CreateRecipeComponent } from './Components/create-recipe/create-recipe.component';
+import { RecipesComponent } from './Components/recipes/recipes.component';
+import { PendentRecipesComponent } from './Components/admin-dashboard/pendent-recipes/pendent-recipes.component';
+import { FilterRecipePipe } from './Pipes/filter-recipe.pipe';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,10 @@ import { CreateRecipeComponent } from './Components/create-recipe/create-recipe.
     AdminDashboardComponent,
     EditUserComponent,
     FilterUserPipe,
-    CreateRecipeComponent
+    CreateRecipeComponent,
+    RecipesComponent,
+    PendentRecipesComponent,
+    FilterRecipePipe
 
 
   ],

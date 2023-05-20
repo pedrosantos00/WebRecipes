@@ -40,6 +40,7 @@ ngOnInit(): void
 
     this.getUserImage(this.userId);
 
+
   this.profileForm = this.fb.group({
     firstName : ['', Validators.required],
     lastName : ['', Validators.required],
@@ -78,7 +79,10 @@ updateUserData(){
       }
     })
   }
+  console.log(this.userImage)
+
   this.goToDashBoard();
+
 }
 
     private validateAllFormFields(formGroup:FormGroup)

@@ -44,6 +44,8 @@ export class UserService {
   updatePicture(id: number, picture: File) {
     const formData = new FormData();
     formData.append('imageData', picture);
+
+    console.log(formData)
     return this.http.put<any>(`${this.baseUrl}/img=${id}`, formData);
   }
 

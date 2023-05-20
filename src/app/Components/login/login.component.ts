@@ -63,7 +63,7 @@ ngOnInit(): void
             this.user.setFullName(tokenPayload.unique_name);
             this.user.setRole(tokenPayload.role);
             this.user.setId(tokenPayload.id)
-            this.alert.success({detail:"SUCCESS",summary:res.message, duration:5000});
+            this.alert.success({detail:"SUCCESS",summary:'Login Sucess, welcome!', duration:5000});
             this.router.navigate(['']);
 
           },
