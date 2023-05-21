@@ -21,6 +21,9 @@ export class RecipeService {
     return this.http.post<any>(`${this.baseUrl}/create?userId=${id}`,recipeObj)
   }
 
+  updateRecipe(recipe : Recipe) {
+    return this.http.put<any>(`${this.baseUrl}/update`, recipe);
+  }
 
   getRecipe(id?: number): Observable<Recipe> {
     if (id == null || id == undefined) {
@@ -33,6 +36,10 @@ export class RecipeService {
   getRecipesByUserId(userId: number): Observable<Recipe> {
       return this.http.get<Recipe>(`${this.baseUrl}/user/${userId}`);
   }
+
+  getFavRecipesByUserId(userId: number): Observable<Recipe> {
+    return this.http.get<Recipe>(`${this.baseUrl}/fav/user/${userId}`);
+}
 
   getRecipeToAproove(): Observable<Recipe> {
       return this.http.get<Recipe>(`${this.baseUrl}/Aproove`);
@@ -51,6 +58,9 @@ export class RecipeService {
     return this.http.post<any>(`${this.baseUrl}/r/${recipeId}/${rate}` , {});
   }
 
+  deleteRecipe(recipeId : number){
+    return this.http.delete<any>(`${this.baseUrl}/del/${recipeId}`);
+  }
 
 
 

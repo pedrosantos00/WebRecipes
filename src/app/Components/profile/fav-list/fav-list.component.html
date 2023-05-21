@@ -1,1 +1,56 @@
-<p>fav-list works!</p>
+<div class="album py-5 bg-body-tertiary">
+  <div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      <div *ngFor="let recipe of recipes " class="col">
+        <a *ngIf="recipe.approved" class="card-link">
+          <div class="card shadow-sm recipe-card" (click)="gotoRecipe(recipe.id)">
+            <div class="heart-icon" (click)="addOrRemoveToFavourite(recipe.id); $event.stopPropagation()">
+              <ng-container *ngIf="recipe.favoritedBy && isFavorited(recipe.favoritedBy, userId); else notFavorited">
+                <i class="fa fa-heart" style="color: red;" aria-hidden="true"></i>
+              </ng-container>
+              <ng-template #notFavorited>
+                <i class="fa fa-heart" aria-hidden="true"></i>
+              </ng-template>
+            </div>
+            <img [src]="recipe.img" class="card-img-top" alt="Recipe Photo">
+            <div class="card-body">
+              <div *ngIf="recipe.description < 9 else readMore">
+                <h5 class="card-title">{{recipe.title}}</h5>
+                <p class="card-text">{{recipe.description}}</p>
+              </div>
+              <ng-template #readMore>
+                <h5 class="card-title">{{recipe.title}}</h5>
+                <p class="card-text">{{recipe.description | slice: 0:38}}... <a style="font-style: italic; color: blue;">read more</a></p>
+              </ng-template>
+              <div class="row">
+                <div class="col">
+                  <div class="recipe-details">
+                    <span class="recipe-time"><i class="fa fa-clock-o"></i> {{recipe.estimatedTime}} mins</span>
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <div class="recipe-difficulty">
+                    <span class="difficulty-icon"><i class="fa fa-fire"> {{recipe.difficulty}}</i></span>
+                  </div>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col">
+                  <div class="recipe-rate">
+                    <span class="star"><i class="fa fa-star"></i></span>
+                    <span class="rate-value"> {{recipe.rate | number : '1.1-1'}}</span>
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <div class="recipe-difficulty">
+                    <span class="difficulty-icon"><i class="fa fa-cutlery"> {{recipe.mealsPerRecipe}}</i></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

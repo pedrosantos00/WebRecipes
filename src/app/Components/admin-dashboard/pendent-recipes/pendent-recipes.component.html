@@ -3,7 +3,7 @@
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
       <div *ngFor="let recipe of recipes" class="col">
         <a class="card-link">
-          <div *ngIf="!recipe.aprooved" class="card shadow-sm recipe-card">
+          <div *ngIf="!recipe.aprooved" class="card shadow-sm recipe-card" (click)="gotoRecipe(recipe.id)">
             <img [src]="recipe.img" class="card-img-top" alt="Recipe Photo">
             <div class="card-body">
               <div *ngIf="recipe.description < 9 else readMore">
@@ -12,7 +12,7 @@
               </div>
               <ng-template #readMore>
                 <h5 class="card-title">{{recipe.title}}</h5>
-                <p class="card-text" >{{recipe.description | slice: 0:90}}... <a style="font-style: italic; color: blue;">read more</a></p>
+                <p class="card-text" >{{recipe.description | slice: 0:38}}... <a style="font-style: italic; color: blue;">read more</a></p>
               </ng-template>
               <div class="row">
                 <div class="col">

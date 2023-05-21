@@ -56,11 +56,12 @@ export class AdminDashboardComponent implements OnInit{
 
 
   deleteUser(userId : number){
+    if (confirm("Are you sure you want to delete?")) {
     this.api.remove(userId).subscribe();
     this.alert.info({detail:"User",summary:"User Deleted!", duration:5000});
     this.deletedUserId = userId;
     this.api.getUser();
-    // window.location.reload();
+    }
   }
 
   editUser(UserId: number){

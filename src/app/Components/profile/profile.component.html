@@ -94,10 +94,22 @@
 
 <main class="container py-3">
   <div class="main-class">
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link active" id="myRecipesTab" data-toggle="tab" href="#myRecipes">My Recipes</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="favoritesTab" data-toggle="tab" href="#favorites">Favorites</a>
+      </li>
 
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-      <h1 class="h2">My recipes | Favourites</h1>
-    </div>
-    <app-recipes [profileUserId]="id"></app-recipes>
-
+    </ul>
+    <div class="tab-content mt-2">
+      <div class="tab-pane fade show active" id="myRecipes">
+        <app-recipes [profileUserId]="id"></app-recipes>
       </div>
+      <div class="tab-pane fade" id="favorites">
+        <app-fav-list [profileUserId]="id" ></app-fav-list>
+      </div>
+    </div>
+  </div>
+</main>

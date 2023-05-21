@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Recipe } from 'src/app/Models/Recipe';
 import { RecipeService } from 'src/app/Services/recipe.service';
 
@@ -10,7 +11,7 @@ import { RecipeService } from 'src/app/Services/recipe.service';
 export class PendentRecipesComponent implements OnInit{
 
   recipes: any;
-  constructor(private recipeService: RecipeService){
+  constructor(private recipeService: RecipeService, private router : Router){
 
   }
 
@@ -51,6 +52,11 @@ convertDataToBase64(base64Data: string): string {
  const blob = new Blob([byteArray], { type: 'image/jpeg' });
  const urlCreator = window.URL || window.webkitURL;
  return urlCreator.createObjectURL(blob);
+}
+
+gotoRecipe(recipeId: number){
+  console.log(recipeId)
+  this.router.navigate(['/v'] , { queryParams: { recipe : recipeId } })
 }
 
 

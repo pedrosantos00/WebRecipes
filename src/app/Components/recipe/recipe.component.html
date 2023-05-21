@@ -1,11 +1,15 @@
 
-  <div class="container recipe-container">
-    <div class="d-flex justify-content-end">
+  <div *ngIf="!editFlag else edit" class="container recipe-container">
+    <div class="d-flex justify-content-start">
       <button type="submit" class="btn btn-dark mt-2" (click)="goToDashBoard()"> < Back</button>
+    </div>
+    <div *ngIf="user.role == 'Admin' || recipe.userId == userId" class="d-flex justify-content-end">
+      <button type="submit" class="btn btn-warning mt-2 mx-2" (click)="editTemplate()">Edit</button>
+      <button type="button" class="btn btn-danger mt-2" (click)="deleteRecipe()">Delete</button>
     </div>
     <h1>{{ recipe.title }}</h1>
     <p>{{ recipe.description }}</p>
-    <img src="{{ recipe.img }}" alt="Recipe Image" class="recipe-image">
+    <img src="{{ imgRecipe }}" alt="Recipe Image" class="recipe-image">
 
     <div class="recipe-details">
       <div class="icon-label">
@@ -19,11 +23,11 @@
       <div class="rating-container">
         <span class="rate-label">Rate:</span>
         <div class="rating-stars">
-          <i class="fa fa-star-o" (mouseover)="handleMouseOver(2)" (mouseout)="handleMouseOut()" (click)="rate(1)"></i>
-          <i class="fa fa-star-o" (mouseover)="handleMouseOver(3)" (mouseout)="handleMouseOut()"(click)="rate(2)"></i>
-          <i class="fa fa-star-o" (mouseover)="handleMouseOver(4)" (mouseout)="handleMouseOut()"(click)="rate(3)"></i>
-          <i class="fa fa-star-o" (mouseover)="handleMouseOver(5)" (mouseout)="handleMouseOut()"(click)="rate(4)"></i>
-          <i class="fa fa-star-o" (mouseover)="handleMouseOver(6)" (mouseout)="handleMouseOut()"(click)="rate(5)"></i>
+          <i class="fa fa-star-o" (mouseover)="handleMouseOver(1)" (mouseout)="handleMouseOut()" (click)="rate(1)"></i>
+          <i class="fa fa-star-o" (mouseover)="handleMouseOver(2)" (mouseout)="handleMouseOut()"(click)="rate(2)"></i>
+          <i class="fa fa-star-o" (mouseover)="handleMouseOver(3)" (mouseout)="handleMouseOut()"(click)="rate(3)"></i>
+          <i class="fa fa-star-o" (mouseover)="handleMouseOver(4)" (mouseout)="handleMouseOut()"(click)="rate(4)"></i>
+          <i class="fa fa-star-o" (mouseover)="handleMouseOver(5)" (mouseout)="handleMouseOut()"(click)="rate(5)"></i>
         </div>
       </div>
       <div class="icon-label">
@@ -82,3 +86,137 @@
       </form>
     </div>
   </div>
+
+<ng-template #edit>
+  <div class="container recipe-container">
+    <div class="d-flex justify-content-start">
+      <button type="submit" class="btn btn-dark mt-2" (click)="goToDashBoard()"> < Back</button>
+    </div>
+    <div class="d-flex justify-content-end">
+      <button type="submit" class="btn btn-success mt-2 mx-2" (click)="saveChanges()">Save</button>
+      <button type="submit" class="btn btn-danger mt-2" (click)="editTemplate()">Cancel</button>
+    </div>
+    <h1>Title</h1>
+    <h1><input type="text" class="form-control" [(ngModel)]="recipe.title"></h1>
+    <h2>Description</h2>
+    <p><textarea class="form-control" rows="4" [(ngModel)]="recipe.description"></textarea></p>
+
+
+    <div class="image-container">
+      <img src="{{ imgRecipe}}" alt="Recipe Image" class="recipe-image">
+      <div class="col-12 col-md-4">
+        <h3>Change Image</h3>
+        <input type="file" #fileInput (change)="onFileSelected($event)">
+      </div>
+    </div>
+
+    <br>
+
+<div class="recipe-details">
+    <div class="icon-label">
+      <i class="fa fa-clock-o" aria-hidden="true"></i>
+      <span><input type="number" class="form-control" [(ngModel)]="recipe.estimatedTime"></span>
+    </div>
+    <div class="icon-label">
+      <i class="fa fa-cutlery" aria-hidden="true"></i>
+      <span><input type="number" class="form-control" [(ngModel)]="recipe.mealsPerRecipe"></span>
+    </div>
+    <div class="icon-label">
+      <i class="fa fa-trophy" aria-hidden="true"></i>
+        <select class="form-control" [(ngModel)]="recipe.difficulty">
+          <option value="Easy">Easy</option>
+          <option value="Medium">Medium</option>
+          <option value="Hard">Hard</option>
+        </select>
+    </div>
+
+    <div *ngIf="user.role == 'Admin' " class="form-check">
+      <input class="form-check-input" type="checkbox" [(ngModel)]="recipe.approved">
+      <label class="form-check-label" for="approved">Approved</label>
+    </div>
+  </div>
+
+    <div class="recipe-tags">
+      <h5>Tags:</h5>
+      <ul>
+        <li *ngFor="let tag of recipe.tags; let i = index">
+          <div class="input-group">
+            <input type="text" class="form-control" [(ngModel)]="tag.tagName">
+            <div class="input-group-append">
+              <button class="btn btn-danger" type="button" (click)="deleteTag(i)">Delete</button>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div class="mt-2">
+        <button class="btn btn-primary" type="button" (click)="addNewTag()">Add Tag</button>
+      </div>
+    </div>
+
+    <div class="recipe-ingredients">
+      <h3>Ingredients:</h3>
+      <ul>
+        <li *ngFor="let ingredient of recipe.ingredients; let i = index">
+          <div class="input-group">
+            <div class="input-group-prepend">
+            </div>
+            <input type="text" class="form-control" [(ngModel)]="ingredient.name">
+            <input type="text" class="form-control" [(ngModel)]="ingredient.quantity">
+            <input type="text" class="form-control" [(ngModel)]="ingredient.quantityType">
+            <div class="input-group-append">
+              <button class="btn btn-danger" type="button" (click)="deleteIngredient(i)">Delete</button>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div class="mt-2">
+        <button class="btn btn-primary" type="button" (click)="addNewIngredient()">Add Ingredient</button>
+      </div>
+    </div>
+
+    <div class="recipe-steps">
+      <h3>Steps:</h3>
+      <ol class="list-group">
+        <li class="step-item list-group-item" *ngFor="let step of recipe.steps; let i = index">
+          <div class="input-group">
+            <div class="input-group-prepend">
+            </div>
+            <input type="text" class="form-control" [(ngModel)]="step.stepDescription">
+            <div class="input-group-append">
+              <button class="btn btn-danger" type="button" (click)="deleteStep(i)">Delete</button>
+            </div>
+          </div>
+        </li>
+      </ol>
+      <div class="mt-2">
+        <button class="btn btn-primary" type="button" (click)="addNewStep()">Add Step</button>
+      </div>
+    </div>
+
+    <div class="recipe-comments">
+      <h3>Comments:</h3>
+      <ul class="list-group">
+        <li class="comment-item list-group-item" *ngFor="let comment of recipe.comments; let i = index">
+          <div class="comment-header">
+            <b>{{ comment.name }}</b>
+            <button type="button" class="btn btn-danger btn-sm" (click)="deleteComment(i)">Delete</button>
+          </div>
+          <span class="comment-date">{{ comment.createdDate | date:'dd/MM/yyyy'}}</span>
+          <div class="comment-text">{{ comment.text }}</div>
+        </li>
+      </ul>
+    </div>
+
+
+    <div class="comment-form">
+      <form>
+        <div class="form-group">
+          <textarea class="form-control" id="comment" rows="2" placeholder="Enter your comment"></textarea>
+        </div>
+        <div class="d-flex justify-content-end">
+          <button type="submit" class="btn btn-dark mt-2" (click)="sendCommentary()">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-template>

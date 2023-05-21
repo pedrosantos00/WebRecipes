@@ -22,5 +22,6 @@ export class Recipe {
   ingredients!: Ingredient[];
   steps!: Step[];
   comments!: Comment[];
-  favoritedBy?: favoritedBy[]
+  favoritedBy?: favoritedBy[];
+  approved?: boolean;
 }
