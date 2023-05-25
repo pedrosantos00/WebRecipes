@@ -12,19 +12,20 @@ import { Observable } from 'rxjs';
 export class RecipeService {
 
   private baseUrl: string = "https://localhost:7145/Recipe";
-  private comUrl: string = "https://localhost:7145/Comment";
   constructor(private http: HttpClient, private router: Router) { }
 
 
-  createRecipe(recipeObj : any , id : number )
-  {
-    return this.http.post<any>(`${this.baseUrl}/create?userId=${id}`,recipeObj)
+  //create a recipe
+  createRecipe(recipeObj: any, id: number) {
+    return this.http.post<any>(`${this.baseUrl}/create?userId=${id}`, recipeObj)
   }
 
-  updateRecipe(recipe : Recipe) {
+  //update a existing recipe
+  updateRecipe(recipe: Recipe) {
     return this.http.put<any>(`${this.baseUrl}/update`, recipe);
   }
 
+  // get recipes / recipe by ID
   getRecipe(id?: number): Observable<Recipe> {
     if (id == null || id == undefined) {
       return this.http.get<Recipe>(`${this.baseUrl}`);
@@ -33,32 +34,38 @@ export class RecipeService {
     }
   }
 
+  //get recipes by user Id
   getRecipesByUserId(userId: number): Observable<Recipe> {
-      return this.http.get<Recipe>(`${this.baseUrl}/user/${userId}`);
+    return this.http.get<Recipe>(`${this.baseUrl}/user/${userId}`);
   }
 
+   //get recipes by Fav user Id
   getFavRecipesByUserId(userId: number): Observable<Recipe> {
     return this.http.get<Recipe>(`${this.baseUrl}/fav/user/${userId}`);
-}
-
-  getRecipeToAproove(): Observable<Recipe> {
-      return this.http.get<Recipe>(`${this.baseUrl}/Aproove`);
   }
 
-  addComment(comment : Comment , id : number){
-    return this.http.post<Recipe>(`${this.baseUrl}/c/${id}`, comment);
+  // get recipes waiting to approve
+  getRecipeToApprove(): Observable<Recipe> {
+    return this.http.get<Recipe>(`${this.baseUrl}/approve`);
   }
 
-  addOrRemoveFavRecipe(recipeId : number , userId : number )
-  {
-    return this.http.put<any>(`${this.baseUrl}/fav/${userId}/${recipeId}` , {});
+  // get recipes waiting to approve
+  addComment(comment: Comment, id: number) {
+    return this.http.post<any>(`${this.baseUrl}/c/${id}`, comment);
   }
 
-  addRate(recipeId : number , rate : number) {
-    return this.http.post<any>(`${this.baseUrl}/r/${recipeId}/${rate}` , {});
+  // add a user to the fav recipe list
+  addOrRemoveFavRecipe(recipeId: number, userId: number) {
+    return this.http.put<any>(`${this.baseUrl}/fav/${userId}/${recipeId}`, {});
   }
 
-  deleteRecipe(recipeId : number){
+  // add/update rate
+  addRate(recipeId: number, rate: number, userId: number) {
+    return this.http.post<any>(`${this.baseUrl}/r/${recipeId}/${rate}/${userId}`, {});
+  }
+
+  // delete recipe
+  deleteRecipe(recipeId: number) {
     return this.http.delete<any>(`${this.baseUrl}/del/${recipeId}`);
   }
 

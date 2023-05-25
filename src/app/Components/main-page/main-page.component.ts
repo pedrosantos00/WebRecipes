@@ -12,14 +12,14 @@ import { UserService } from 'src/app/Services/user.service';
 })
 export class MainPageComponent implements OnInit {
 
-  filteredValue! : '';
+  filteredValue!: '';
   mainRoute?: boolean;
   isLoggedIn?: boolean;
   recipeFlag?: boolean;
   userId: number = 0;
-  user = new User() ;
+  user = new User();
 
-  constructor(private router: Router, private auth: AuthService, private userService : UserService, public tokenService : UserStoreService) {
+  constructor(private router: Router, private auth: AuthService, private userService: UserService, public tokenService: UserStoreService) {
 
   }
 
@@ -29,21 +29,23 @@ export class MainPageComponent implements OnInit {
 
     this.userId = this.getUser();
 
+    if(this.userId != null || this.userId != undefined) {
+      this.userService.getUser(this.userId)
+      .subscribe(val => {
+        this.user = val;
+      })
+    }
 
-    this.userService.getUser(this.userId)
-    .subscribe(val => {
-      this.user = val ;
-    })
 
   }
 
-  getUser(){
+  getUser() {
     let id = 0;
-     this.tokenService.getId()
-    .subscribe(val => {
-      let idFromToken = this.auth.getIdFromToken();
-      id = val || idFromToken
-    })
+    this.tokenService.getId()
+      .subscribe(val => {
+        let idFromToken = this.auth.getIdFromToken();
+        id = val || idFromToken
+      })
     return id;
   }
 
@@ -51,11 +53,13 @@ export class MainPageComponent implements OnInit {
     return this.router.url == "/" ? true : false;
   }
 
+  // Toggle the  recipeFlag variable to expand the create-recipe component
   toggleCreateRecipe() {
     this.recipeFlag = !this.recipeFlag;
 
   }
 
+  // hide create-recipe component after creation
   createRecipe() {
     this.toggleCreateRecipe();
   }

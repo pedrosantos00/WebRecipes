@@ -30,20 +30,49 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.getUser();
+    // Initialize the profileForm FormGroup
     this.profileForm = this.fb.group({
       firstName: [''],
       lastName: [''],
       email: [''],
       password: ['']
+
     })
 
+     // get user data
     this.userService.getUser(this.id)
       .subscribe(val => {
         this.user = val;
+        this.convertImg(this.user);
       })
-
-    this.getUserImage(this.id);
   }
+
+
+  // Convert the user's profile picture to base64 format for display
+  convertImg(user: User) {
+    if(this.user.profilePicture !=null) {
+      this.userImage = this.convertDataToBase64(user.profilePicture);
+    }
+    else {
+      this.userImage = "https://w7.pngwing.com/pngs/831/88/png-transparent-user-profile-computer-icons-user-interface-mystique-miscellaneous-user-interface-design-smile-thumbnail.png";
+    }
+
+  }
+
+
+  // Convert the base64 image data to a Blob object
+  convertDataToBase64(base64Data: string): string {
+    const byteCharacters = atob(base64Data);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: 'image/jpeg' });
+    const urlCreator = window.URL || window.webkitURL;
+    return urlCreator.createObjectURL(blob);
+  }
+
 
 
   getUser() {
@@ -56,17 +85,7 @@ export class ProfileComponent implements OnInit {
     return id;
   }
 
-  getUserImage(id: number) {
-    this.userService.getUserImage(id)
-      .then((imageData: string) => {
-        this.userImage = imageData;
-      })
-      .catch(error => {
-        this.userImage = 'https://w7.pngwing.com/pngs/831/88/png-transparent-user-profile-computer-icons-user-interface-mystique-miscellaneous-user-interface-design-smile-thumbnail.png';
-      });
-  }
-
-
+  // Update user data with the provided form values
   updateUserData() {
     let response;
     if (this.profileForm.value != "") {
@@ -78,25 +97,25 @@ export class ProfileComponent implements OnInit {
             this.userService.getUser(this.id)
               .subscribe(val => {
                 this.user = val;
+                this.edit();
+                this.getUser();
               })
 
           },
           error: (err) => {
             this.alert.error({ detail: "ERROR", summary: err?.message, duration: 5000 });
+            this.edit();
           }
         })
-
-      this.edit();
-      window.location.reload();
     }
   }
 
-
+  // Trigger the file input element to open the file selection
   triggerFileInput(): void {
     this.fileInput.nativeElement.click();
-
   }
 
+    // Update the user's profile picture with the selected image
   onFileSelected(event: Event) {
     this.imgToUpdate = (event.target as HTMLInputElement).files?.[0];
     const reader = new FileReader();
@@ -121,11 +140,12 @@ export class ProfileComponent implements OnInit {
   }
 
 
-
+// Toggle the editFlag to enable/disable form editing
   edit() {
     this.editFlag = !this.editFlag;
   }
 
+  // Toggle the password visibility
   hideShowPass() {
     this.istText = !this.istText;
     this.istText ? this.eyeIcon = "fa-eye" : this.eyeIcon = "fa-eye-slash";

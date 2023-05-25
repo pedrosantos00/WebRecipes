@@ -1,10 +1,13 @@
-<div class="album py-5 bg-body-tertiary">
+<div class="album py-5 ">
   <div class="container">
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="Search for name, description, difficulty, category or tags" [(ngModel)]="filteredValue">
+    </div>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
       <div *ngFor="let recipe of recipes | filterRecipe: filteredValue; let i = index" class="col">
         <a *ngIf="recipe.approved" class="card-link">
           <div class="card shadow-sm recipe-card" (click)="gotoRecipe(recipe.id)">
-            <div class="heart-icon" (click)="addOrRemoveToFavourite(recipe.id); $event.stopPropagation()">
+            <div *ngIf="isLoggedIn" class="heart-icon" (click)="addOrRemoveToFavourite(recipe.id); $event.stopPropagation()">
               <ng-container *ngIf="recipe.favoritedBy && isFavorited(recipe.favoritedBy, userId); else notFavorited">
                 <i class="fa fa-heart" style="color: red;" aria-hidden="true"></i>
               </ng-container>
@@ -20,7 +23,8 @@
               </div>
               <ng-template #readMore>
                 <h5 class="card-title">{{recipe.title}}</h5>
-                <p class="card-text">{{recipe.description | slice: 0:38}}... <a style="font-style: italic; color: blue;">read more</a></p>
+                <p class="card-text">{{recipe.description | slice: 0:38}}... <a
+                    style="font-style: italic; color: blue;">read more</a></p>
               </ng-template>
               <div class="row">
                 <div class="col">

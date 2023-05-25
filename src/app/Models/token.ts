@@ -1,4 +1,4 @@
 export class token {
-  acessToken!:string;
-  refreshToken!:string;
+  accessToken!: string;
+  refreshToken!: string;
 }

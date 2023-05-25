@@ -1,43 +1,43 @@
-.mainPage{
+.mainPage {
   height: 100vh;
 
 }
 
-.panel-heading{
+.panel-heading {
   text-align: center;
   margin-bottom: 10px;
 }
 
-#forget{
+#forget {
   min-width: 100px;
   margin-left: auto;
   text-decoration: none;
   cursor: pointer;
 }
 
-a:hover{
+a:hover {
   text-decoration: none;
 }
 
 .form-inline label {
-  padding-left: 10px ;
+  padding-left: 10px;
   margin: 0;
   cursor: pointer;
 }
 
-.btn{
-  margin-top:20px;
+.btn {
+  margin-top: 20px;
   border-radius: 15px;
 }
 
-.panel{
+.panel {
   min-height: 380px;
-  box-shadow: 20px 20px 80px rgb(218,218, 218);
+  box-shadow: 20px 20px 80px rgb(218, 218, 218);
   border-radius: 12px;
   margin-top: 100px;
 }
 
-.input-field{
+.input-field {
   border-radius: 5px;
   padding: 5px;
   display: flex;
@@ -47,26 +47,26 @@ a:hover{
   color: #0000a7;
 }
 
-.input-field.error{
+.input-field.error {
   border: 1px solid red;
   color: red;
 }
 
 input[type='text'],
-input[type='password']{
+input[type='password'] {
   border: none;
   outline: none;
   box-shadow: none;
   width: 100%;
 }
 
-.fa-eye-slash.btn{
+.fa-eye-slash.btn {
   border: none;
   outline: none;
   box-shadow: none;
 }
 
-img{
+img {
   width: 40px;
   height: 40px;
   object-fit: cover;
@@ -74,12 +74,12 @@ img{
   position: relative;
 }
 
-.bordert{
-border-top: 1px solid #aaa;
-position: relative;
+.bordert {
+  border-top: 1px solid #aaa;
+  position: relative;
 }
 
-.bordert::after{
+.bordert::after {
   content: "OR";
   position: absolute;
   top: -13px;
@@ -88,10 +88,12 @@ position: relative;
   padding: 0 8px;
 }
 
-.btn-primary,.btn-primary:active, .btn-primary:visited {
+.btn-primary,
+.btn-primary:active,
+.btn-primary:visited {
   background-color: #003cff !important;
 }
 
-.btn-primary:hover{
+.btn-primary:hover {
   background-color: #002cbd !important;
 }

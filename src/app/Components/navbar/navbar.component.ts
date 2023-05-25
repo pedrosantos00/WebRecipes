@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { User } from 'src/app/Models/User';
 import { AuthService } from 'src/app/Services/auth.service';
@@ -12,58 +13,58 @@ import { UserService } from 'src/app/Services/user.service';
 })
 export class NavbarComponent implements OnInit {
 
-  isLoggedIn? : boolean;
-  role? : string;
-  userId? : number;
+  isLoggedIn?: boolean;
+  role?: string;
+  userId?: number;
   userImage?: string;
 
-  constructor(private auth : AuthService , private alert : NgToastService , private tokenService : UserStoreService, private userService : UserService)
-  {
+  constructor(private router : Router, private auth: AuthService, private alert: NgToastService, private tokenService: UserStoreService, private userService: UserService) {
 
   }
 
-  ngOnInit(): void
-  {
+  ngOnInit(): void {
     this.isLoggedIn = this.auth.isLoggedIn();
     this.role = this.getRole();
     this.userId = this.getUser();
-    if(this.isLoggedIn)
-    {
+    if (this.isLoggedIn) {
       this.userImage = this.getUserImage(this.userId);
-
     }
   }
 
-  getUser(){
+  // get user Id from token without apis
+  getUser() {
     let id = 0;
-     this.tokenService.getId()
-    .subscribe(val => {
-      let idFromToken = this.auth.getIdFromToken();
-      id = val || idFromToken
+    this.tokenService.getId()
+      .subscribe(val => {
+        let idFromToken = this.auth.getIdFromToken();
+        id = val || idFromToken
 
-    })
+      })
 
 
     return id;
   }
 
-  getRole(){
+  // get role from token without apis
+  getRole() {
     let role;
-     this.tokenService.getRole()
-    .subscribe(val => {
-      let roleFromToken = this.auth.getRoleFromToken()
-      role = val || roleFromToken
-    })
+    this.tokenService.getRole()
+      .subscribe(val => {
+        let roleFromToken = this.auth.getRoleFromToken()
+        role = val || roleFromToken
+      })
     return role;
   }
 
-  logout(){
+  // clear local storage
+  logout() {
     this.auth.signOut();
     this.isLoggedIn = false;
-    this.alert.success({detail:"Logout",summary:"Logout Success!", duration:5000});
+    window.location.reload();
   }
 
-  getUserImage(id: number) : any {
+  // get user img
+  getUserImage(id: number): any {
     this.userService.getUserImage(id)
       .then((imageData: string) => {
         this.userImage = imageData;

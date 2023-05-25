@@ -15,9 +15,9 @@ export class User {
   favoriteRecipes!: Recipe[];
 
 
-  profilePicture!: ArrayBuffer | null;
+  profilePicture!: any;
   role!: string;
   token!: string;
   refreshToken!: string;
-  refreshTokenExpiryTime!: Date ;
+  refreshTokenExpiryTime!: Date;
 }

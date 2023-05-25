@@ -1,79 +1,77 @@
 <section class="py-1 text-center container">
   <div class="card">
     <div class="card-body">
-      <img
-      [src]="userImage"
-      width="100" height="100" class="rounded-circle">
+      <img [src]="userImage" width="100" height="100" class="rounded-circle">
       <h5 class="card-title">{{user.fullName}}</h5>
       <a style="cursor:pointer; color: blue;" (click)="triggerFileInput()">edit photo</a>
       <input type="file" #fileInput style="display: none" (change)="onFileSelected($event)">
-        <form [formGroup]="profileForm">
-          <div class="row">
-            <div class="col-sm-4">
-              <div class="card  border-0">
-                <div class="card-body">
-                  <h5 class="card-title">Name</h5>
+      <form [formGroup]="profileForm">
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="card  border-0">
+              <div class="card-body">
+                <h5 class="card-title">Name</h5>
 
-                  <div class="input-field"
-                    [class.error]="profileForm.controls['firstName'].dirty && profileForm.hasError('firstName') ">
-                    <span class="fa fa-user p-2"></span>
+                <div class="input-field"
+                  [class.error]="profileForm.controls['firstName'].dirty && profileForm.hasError('firstName') ">
+                  <span class="fa fa-user p-2"></span>
 
-                    <input formControlName="firstName" type="text" placeholder="{{user.firstName}}">
-                  </div>
-                  <br>
-                  <div class="input-field"
+                  <input formControlName="firstName" type="text" placeholder="{{user.firstName}}">
+                </div>
+                <br>
+                <div class="input-field"
                   [class.error]="profileForm.controls['lastName'].dirty && profileForm.hasError('lastName') ">
                   <span class="fa fa-user p-2"></span>
 
                   <input formControlName="lastName" type="text" placeholder="{{user.lastName}}">
-                  </div>
                 </div>
               </div>
             </div>
-            <div class="col-sm-4">
-              <div class="card  border-0 ">
-                <div class="card-body">
-                  <h5 class="card-title">Email</h5>
-                  <div class="input-field"
-                    [class.error]="profileForm.controls['email'].dirty && profileForm.hasError('email')">
-                    <span class="fa fa-envelope p-2"></span>
+          </div>
+          <div class="col-sm-4">
+            <div class="card  border-0 ">
+              <div class="card-body">
+                <h5 class="card-title">Email</h5>
+                <div class="input-field"
+                  [class.error]="profileForm.controls['email'].dirty && profileForm.hasError('email')">
+                  <span class="fa fa-envelope p-2"></span>
 
-                    <input formControlName="email" type="text" placeholder="{{user.email}}">
-                  </div>
-                  <div class="form-group col-md-4 pt-4">
-                    <select class="form-control" formControlName="role" >
-                      <option>User</option>
-                      <option>Admin</option>
-                    </select>
-                  </div>
-                  </div>
+                  <input formControlName="email" type="text" placeholder="{{user.email}}">
+                </div>
+                <div class="form-group col-md-4 pt-4">
+                  <select class="form-control" formControlName="role">
+                    <option>User</option>
+                    <option>Admin</option>
+                  </select>
                 </div>
               </div>
+            </div>
+          </div>
 
 
-            <div class="col-sm-4">
-              <div class="card  border-0 ">
-                <div class="card-body">
-                  <h5 class="card-title">Password</h5>
-                  <div class="input-field"
-                    [class.error]="profileForm.controls['password'].dirty && profileForm.hasError('password')">
-                    <span class="fa fa-lock p-2"></span>
-                    <input formControlName="password" [type]="type" placeholder="Password">
-                    <span (click)="hideShowPass()" class="fa {{eyeIcon}}"></span>
-                  </div>
-                   <div class="form-group col-md-4 pt-4">
-                    <div class="input-field" style="margin-left: 2px;">
-                      <input formControlName="isBlocked" type="checkbox" placeholder="" checked>
-                      <span style="color:black;"> Blocked </span>
-                    </div>
+          <div class="col-sm-4">
+            <div class="card  border-0 ">
+              <div class="card-body">
+                <h5 class="card-title">Password</h5>
+                <div class="input-field"
+                  [class.error]="profileForm.controls['password'].dirty && profileForm.hasError('password')">
+                  <span class="fa fa-lock p-2"></span>
+                  <input formControlName="password" [type]="type" placeholder="Password">
+                  <span (click)="hideShowPass()" class="fa {{eyeIcon}}"></span>
+                </div>
+                <div class="form-group col-md-4 pt-4">
+                  <div class="input-field" style="margin-left: 2px;">
+                    <input formControlName="isBlocked" type="checkbox" placeholder="" checked>
+                    <span style="color:black;"> Blocked </span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </form>
-      <span  class="btn btn-outline-primary me-2" (click)="goToDashBoard()">Cancel</span>
-      <span  class="btn btn-outline-primary me-2" (click)="updateUserData()">Save Changes</span>
+        </div>
+      </form>
+      <span class="btn btn-outline-primary me-2" (click)="goToDashBoard()">Cancel</span>
+      <span class="btn btn-outline-primary me-2" (click)="updateUserData()">Save Changes</span>
     </div>
   </div>
 </section>

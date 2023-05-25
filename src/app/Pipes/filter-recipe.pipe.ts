@@ -7,7 +7,7 @@ import { Tag } from '../Models/Tag';
 export class FilterRecipePipe implements PipeTransform {
 
   transform(values: any[], search: any) {
-
+    // FILTER PIPE FOR RECIPES
     if (search === '' || search === undefined || search === null) {
       return values;
     } else {

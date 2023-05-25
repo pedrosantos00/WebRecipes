@@ -13,62 +13,59 @@ import { RecipeService } from 'src/app/Services/recipe.service';
 export class FavListComponent implements OnInit {
 
   @Input() userId!: number;
- @Input() profileUserId!: number;
- //PIPES
+  @Input() profileUserId!: number;
+  //PIPES
 
   recipes: any;
-  constructor(private recipeService: RecipeService, private router: Router){
+  constructor(private recipeService: RecipeService, private router: Router) {
 
   }
 
-    ngOnInit(): void {
-      this.userId = this.profileUserId;
-        this.loadFavRecipes()
+  ngOnInit(): void {
+    this.userId = this.profileUserId;
+    this.loadFavRecipes()
+  }
+
+
+  // Load favorite recipes for the user
+  async loadFavRecipes(): Promise<void> {
+    try {
+      const res = await this.recipeService.getFavRecipesByUserId(this.profileUserId).toPromise();
+      this.recipes = res;
+      this.convertImg(this.recipes);
+    } catch (error) {
     }
+  }
 
-
-    async loadFavRecipes(): Promise<void> {
-      try {
-        const res = await this.recipeService.getFavRecipesByUserId(this.profileUserId).toPromise();
-        console.log(res)
-        this.recipes = res;
-        this.convertImg(this.recipes);
-      } catch (error) {
-        console.error('Error loading recipes:', error);
-      }
-    }
-
-    convertImg(recipes : Recipe[]) {
-      recipes.forEach(element => {
-        console.log(element)
+  // Convert the image data of each recipe to base64 format
+  convertImg(recipes: Recipe[]) {
+    recipes.forEach(element => {
       element.img = this.convertDataToBase64(element.img);
-     });
-    }
+    });
+  }
 
 
-    addOrRemoveToFavourite(recipeId : number){
-
-      this.recipeService.addOrRemoveFavRecipe(recipeId,this.userId)
+  // Call the recipeService to add or remove a recipe from favorites for the current user
+  addOrRemoveToFavourite(recipeId: number) {
+    this.recipeService.addOrRemoveFavRecipe(recipeId, this.userId)
       .subscribe(
         () => {
-           this.loadFavRecipes();
-        },
-        error => {
-
+          this.loadFavRecipes();
         }
       );
-      console.log(recipeId);
-    }
+  }
 
-    isFavorited(favoritedBy: favoritedBy[], userId: number): boolean {
-      return favoritedBy.some((favorite) => favorite.userId === userId);
-    }
+  // Check if the current user has favorited the recipe
+  isFavorited(favoritedBy: favoritedBy[], userId: number): boolean {
+    return favoritedBy.some((favorite) => favorite.userId === userId);
+  }
 
-    gotoRecipe(recipeId: number){
-      console.log(recipeId)
-      this.router.navigate(['/v'] , { queryParams: { recipe : recipeId } })
-    }
+  // Navigate to the recipe details page
+  gotoRecipe(recipeId: number) {
+    this.router.navigate(['/v'], { queryParams: { recipe: recipeId } })
+  }
 
+  // Convert the base64 image data to a Blob object
   convertDataToBase64(base64Data: string): string {
     const byteCharacters = atob(base64Data);
     const byteNumbers = new Array(byteCharacters.length);

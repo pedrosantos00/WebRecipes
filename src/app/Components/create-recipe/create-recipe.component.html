@@ -9,14 +9,12 @@
           <small style="color: red;">*</small>
           <input type="text" class="form-control" formControlName="title" placeholder="e.g. Pancakes" required
             maxlength="38">
-
         </div>
 
         <div class="form-group row">
           <div class="col-12 col-md-6">
             <label for="time">Estimated Time (mins)</label>
             <small style="color: red;">*</small>
-
             <input type="number" class="form-control" formControlName="estimatedTime" placeholder="e.g. 120">
           </div>
 
@@ -26,7 +24,7 @@
             <select class="form-control" formControlName="difficulty">
               <option value="">-- Select --</option>
               <option value="Easy">Easy</option>
-              <option value="Medium">Medium</option>
+              <option value="Medium">Intermediate</option>
               <option value="Hard">Hard</option>
             </select>
           </div>
@@ -35,9 +33,8 @@
         <div class="form-group">
           <label for="description">Description</label>
           <small style="color: red;">*</small>
-          <textarea class="form-control" formControlName="description" rows="4" placeholder="e.g. Tasty pancakes "
+          <textarea class="form-control" formControlName="description" rows="4" placeholder="e.g. Tasty pancakes"
             required minlength="8"></textarea>
-
         </div>
 
         <div class="form-group row">
@@ -56,9 +53,8 @@
 
         <div class="form-group">
           <label for="tags">Categories / Tags</label>
-          <input type="text" class="form-control" formControlName="tags"
-            placeholder="breakfast,healthy,pancakes,vegan ">
-          <small class="form-text text-muted">Separate Categories/tags with commas -> e.g :
+          <input type="text" class="form-control" formControlName="tags" placeholder="breakfast,healthy,pancakes,vegan">
+          <small class="form-text text-muted">Separate Categories/tags with commas -> e.g:
             breakfast,healthy,pancakes,vegan</small>
         </div>
 
@@ -78,20 +74,28 @@
               </div>
               <div class="col-12 col-md-4">
                 <input type="text" class="form-control" formControlName="quantityType"
-                  placeholder="Quantity Type e.g. 'gram' " required>
+                  placeholder="Quantity Type e.g. 'gram'" required>
+              </div>
+              <div class="col-12 text-right mt-2">
+                <button type="button" class="btn btn-danger btn-sm" (click)="deleteIngredient(i)">Delete</button>
               </div>
             </div>
           </div>
           <button type="button" class="btn btn-secondary btn-sm mt-2" (click)="addIngredient()">Add Ingredient</button>
         </div>
+
         <div class="form-group">
           <label for="steps">Steps</label>
           <small style="color: red;">*</small>
           <div formArrayName="steps">
             <div class="step-field row" *ngFor="let step of steps.controls; let i = index" [formGroupName]="i">
               <div class="col-12 col-md-1 text-center step-number">{{ i + 1 }}</div>
-              <div class="col-12 col-md-11">
-                <textarea class="form-control" formControlName="stepDescription" rows="3" placeholder="Step description" required></textarea>
+              <div class="col-12 col-md-10">
+                <textarea class="form-control" formControlName="stepDescription" rows="3" placeholder="Step description"
+                  required></textarea>
+              </div>
+              <div class="col-12 col-md-1 text-right">
+                <button type="button" class="btn btn-danger btn-sm" (click)="deleteStep(i)">Delete</button>
               </div>
             </div>
           </div>

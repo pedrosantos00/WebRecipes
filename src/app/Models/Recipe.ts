@@ -1,8 +1,8 @@
-import {User} from './User';
-import {Ingredient} from './Ingredient';
-import {Step} from './Step';
-import {Tag} from './Tag';
-import {Comment} from './Comment';
+import { User } from './User';
+import { Ingredient } from './Ingredient';
+import { Step } from './Step';
+import { Tag } from './Tag';
+import { Comment } from './Comment';
 import { favoritedBy } from './favoritedBy';
 
 

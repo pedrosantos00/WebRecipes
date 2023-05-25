@@ -25,6 +25,7 @@ export class CreateRecipeComponent implements OnInit {
 
 
   constructor(private fb: FormBuilder, private recipeService: RecipeService, private tokenHelper: UserStoreService, private auth: AuthService, private alert: NgToastService) {
+    // Initialize the recipe form with form controls and validators
     this.recipeForm = this.fb.group({
       title: ['', Validators.required],
       estimatedTime: ['', Validators.required],
@@ -42,11 +43,12 @@ export class CreateRecipeComponent implements OnInit {
 
   ngOnInit(): void {
 
+
     this.userId = this.getUser();
 
   }
 
-
+ // Get the user ID without api from token
   getUser() {
     let id = 0;
     this.tokenHelper.getId()
@@ -65,8 +67,9 @@ export class CreateRecipeComponent implements OnInit {
     });
   }
 
+
   createStep(): FormGroup {
-    try{
+    try {
       const stepIndex = this.steps.length;
       const stepId = stepIndex + 1;
       return this.fb.group({
@@ -74,22 +77,25 @@ export class CreateRecipeComponent implements OnInit {
         stepDescription: ['', Validators.required]
       });
     }
-    catch{
-     return this.fb.group({
+    catch {
+      return this.fb.group({
         stepId: 1,
         stepDescription: ['', Validators.required]
       });
     }
   }
 
+  // Add a new ingredient
   addIngredient(): void {
     this.ingredients.push(this.createIngredient());
   }
 
+  // Add a new step
   addStep(): void {
     this.steps.push(this.createStep());
   }
 
+  //add Img
   onFileSelected(event: any): void {
     const file: File = event.target.files[0];
     const reader: FileReader = new FileReader();
@@ -117,6 +123,7 @@ export class CreateRecipeComponent implements OnInit {
   }
 
 
+  // Call the recipe service to create a new recipe
   onSubmit(): void {
     let recipe = this.recipeForm.value;
     recipe.tags = this.tagsArray;
@@ -124,11 +131,10 @@ export class CreateRecipeComponent implements OnInit {
 
 
     if (this.recipeForm.valid) {
-      console.log(recipe)
       this.recipeService.createRecipe(recipe, this.userId).subscribe(
         (response) => {
-          this.alert.success({ detail: "SUCCESS", summary: response?.message, duration: 5000 });
           window.location.reload();
+          this.alert.success({ detail: "SUCCESS", summary: response?.message, duration: 5000 });
         },
         (error) => {
           this.alert.error({ detail: "ERROR", summary: error?.message, duration: 5000 });
@@ -141,6 +147,7 @@ export class CreateRecipeComponent implements OnInit {
     }
   }
 
+  //  mark  form controls as dirty
   private validateAllFormFields(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(f => {
       const control = formGroup.get(f);
@@ -152,5 +159,29 @@ export class CreateRecipeComponent implements OnInit {
       }
     })
   }
+
+  // Remove the ingredient at the specified index
+  deleteIngredient(index: number): void {
+    this.ingredients.removeAt(index);
+
+     // Update the stepId values of the remaining ingredients
+    for (let i = index; i < this.ingredients.length; i++) {
+      const ingredientsGroup = this.ingredients.at(i) as FormGroup;
+      ingredientsGroup.patchValue({ stepId: i + 1 });
+    }
+  }
+
+
+  // Remove the step at the specified index
+  deleteStep(index: number): void {
+    this.steps.removeAt(index);
+
+    // Update the stepId values of the remaining steps
+    for (let i = index; i < this.steps.length; i++) {
+      const stepGroup = this.steps.at(i) as FormGroup;
+      stepGroup.patchValue({ stepId: i + 1 });
+    }
+  }
+
 
 }

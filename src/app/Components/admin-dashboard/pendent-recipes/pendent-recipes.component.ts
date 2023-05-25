@@ -8,56 +8,54 @@ import { RecipeService } from 'src/app/Services/recipe.service';
   templateUrl: './pendent-recipes.component.html',
   styleUrls: ['./pendent-recipes.component.css']
 })
-export class PendentRecipesComponent implements OnInit{
+export class PendentRecipesComponent implements OnInit {
 
   recipes: any;
-  constructor(private recipeService: RecipeService, private router : Router){
-
+  constructor(private recipeService: RecipeService, private router: Router) {
   }
-
 
   ngOnInit(): void {
     this.loadRecipes();
- }
+  }
 
 
+  // get pending recipes
+  async loadRecipes(): Promise<void> {
+    try {
+      // Get pendent recipes from the service
+      const res = await this.recipeService.getRecipeToApprove().toPromise();
+      this.recipes = res;
+      // Convert image data to base64
+      this.convertImg(this.recipes);
+    } catch (error) {
+    }
+  }
 
- async loadRecipes(): Promise<void> {
-   try {
-     const res = await this.recipeService.getRecipeToAproove().toPromise();
-     console.log(res)
-     this.recipes = res;
-     this.convertImg(this.recipes);
-   } catch (error) {
-     console.error('Error loading recipes:', error);
-   }
- }
-
- convertImg(recipes : Recipe[]) {
-   recipes.forEach(element => {
-     console.log(element)
-   element.img = this.convertDataToBase64(element.img);
-  });
- }
+  // Convert image data to base64
+  convertImg(recipes: Recipe[]) {
+    recipes.forEach(element => {
+      element.img = this.convertDataToBase64(element.img);
+    });
+  }
 
 
+  // Convert base64 data to blob URL
+  convertDataToBase64(base64Data: string): string {
+    const byteCharacters = atob(base64Data);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: 'image/jpeg' });
+    const urlCreator = window.URL || window.webkitURL;
+    return urlCreator.createObjectURL(blob);
+  }
 
-convertDataToBase64(base64Data: string): string {
- const byteCharacters = atob(base64Data);
- const byteNumbers = new Array(byteCharacters.length);
- for (let i = 0; i < byteCharacters.length; i++) {
-   byteNumbers[i] = byteCharacters.charCodeAt(i);
- }
- const byteArray = new Uint8Array(byteNumbers);
- const blob = new Blob([byteArray], { type: 'image/jpeg' });
- const urlCreator = window.URL || window.webkitURL;
- return urlCreator.createObjectURL(blob);
-}
-
-gotoRecipe(recipeId: number){
-  console.log(recipeId)
-  this.router.navigate(['/v'] , { queryParams: { recipe : recipeId } })
-}
+  // Nav to recipe page
+  gotoRecipe(recipeId: number) {
+    this.router.navigate(['/v'], { queryParams: { recipe: recipeId } })
+  }
 
 
 }

@@ -15,40 +15,39 @@ export class UserService {
   constructor(private http: HttpClient, private router: Router) { }
 
 
-  getUser(id? : number ) : Observable<User> {
+  // get user by ID
+  getUser(id?: number): Observable<User> {
 
-    if(id == null || id == undefined) {
+    if (id == null || id == undefined) {
       return this.http.get<User>(`${this.baseUrl}`)
     }
-    else{
+    else {
       return this.http.get<User>(`${this.baseUrl}/${id}`)
     }
 
   }
 
-
-
-
-  updateUser(id : number , userObj :  any){
-    return this.http.put<any>(`${this.baseUrl}?id=${id}`,userObj)
+  // update user data
+  updateUser(id: number, userObj: any) {
+    return this.http.put<any>(`${this.baseUrl}?id=${id}`, userObj)
   }
 
-  remove(id : number){
+  // delete user
+  remove(id: number) {
     return this.http.delete<any>(`${this.baseUrl}/${id}`);
   }
 
+  // PICTURES METHODS
 
-
-// PICTURES METHODS
-
+  // update user img
   updatePicture(id: number, picture: File) {
     const formData = new FormData();
     formData.append('imageData', picture);
 
-    console.log(formData)
     return this.http.put<any>(`${this.baseUrl}/img=${id}`, formData);
   }
 
+  // get user img
   getUserImage(id: number): Promise<string> {
     return this.http.get(`${this.baseUrl}/img=${id}`, { responseType: 'blob' })
       .toPromise()

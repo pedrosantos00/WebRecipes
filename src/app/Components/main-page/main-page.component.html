@@ -3,57 +3,44 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Recipe Website for CODE DEV 2023">
   <meta name="author" content="Pedro Santos">
-  <title>teste</title>
 </head>
+
 <body>
 
   <!-- Header Component -->
-<app-navbar  ></app-navbar>
-<router-outlet></router-outlet>
+  <app-navbar></app-navbar>
+  <router-outlet></router-outlet>
 
-<main *ngIf="mainRoute">
+  <main *ngIf="mainRoute">
 
-  <section class="py-1 text-center container">
-    <div class="row-cols-1">
-      <div class="col-lg-12 col-md-4 mx-auto">
-        <h1 class="fw-light">Welcome!</h1>
-
-        <p class="lead text-body-secondary">
-          Welcome to our recipe website, where you will find a variety of delicious options to prepare at home.
-           On the main page, you will find a carefully curated selection of recipes organized by categories such as main dishes,
-           desserts, snacks, vegetarian recipes, gluten-free options, and more.</p>
-
-
-        <p *ngIf="!isLoggedIn">Register or login to share your recipes with us!</p>
-
-        <div *ngIf="isLoggedIn" class="mb-3">
-          <button class="btn btn-outline-success mx-2" type="button" (click)="createRecipe()">Add recipe</button>
-        </div>
+    <header>
+    <div class="container">
+      <h1>Welcome <span style="font-size: 2rem;">{{user.fullName}}</span> !</h1>
+      <p style="font-size: 1.4em;" *ngIf="!isLoggedIn"  class="lead">Welcome to our recipe website, where you will find a variety of delicious options to prepare at home.
+        On the main page, you will find a carefully curated selection of recipes such as main
+        dishes, desserts, snacks, vegetarian recipes, gluten-free options, and more.</p>
+      <p style="font-weight: bolder; font-size: 1.2rem;" *ngIf="!isLoggedIn">Register or login to share your recipes with us!</p>
+      <div *ngIf="isLoggedIn" class="mb-3">
+        <button class="btn btn-primary mx-2" type="button" (click)="createRecipe()">Add recipe</button>
       </div>
-      <div class="input-group mb-3">
-        <input type="text" class="form-control" style="width: 50vh;" aria-describedby="emailHelp" placeholder="Search for name, description, difficulty,  category or tags" [(ngModel)]="filteredValue">
-        <button class="btn btn-outline-primary" type="button">Search</button>
-      </div>
-
     </div>
-  </section>
+  </header>
 
-<section *ngIf="recipeFlag" class="py-1 text-center container">
-  <app-create-recipe></app-create-recipe>
-</section>
+    <section *ngIf="recipeFlag" class="py-1 text-center container">
+      <app-create-recipe></app-create-recipe>
+    </section>
 
-<app-recipes [userId]="userId" [filteredValue]="filteredValue"></app-recipes>
-</main>
+    <app-recipes [userId]="userId" [filteredValue]="filteredValue"></app-recipes>
+  </main>
 
-<footer class="text-body-secondary py-5">
-<div class="container">
-  <p class="mb-1">Maded by: <a href="https://github.com/pedrosantos00">Pedro Santos</a>  , CODE DEV 2023</p>
-</div>
-</footer>
+  <footer class="text-body-secondary py-5">
+    <div class="container">
+      <p class="mb-1">Maded by: <a href="https://github.com/pedrosantos00">Pedro Santos</a> , CODE DEV 2023</p>
+    </div>
+  </footer>
 
 
   <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 
 
 </body>
-

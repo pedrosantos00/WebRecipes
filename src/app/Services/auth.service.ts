@@ -10,39 +10,41 @@ import { token } from '../Models/token';
 })
 export class AuthService {
 
-  private baseUrl: string = "https://localhost:7145/User/";
+  private baseUrl: string = "https://localhost:7145/User";
   private userPayload: any;
 
   constructor(private http: HttpClient, private router: Router)
   {
+    // Decode the token when AuthService is instantiated
     this.userPayload = this.decodedToken();
   }
 
-   // REGISTO NA PAGINA COM DADOS FULL NAME + EMAIL + PASSWORD
+   // REGISTER ON THE PAGE WITH FULL NAME + EMAIL + PASSWORD
   signUp(userObj : User)
   {
-    return this.http.post<any>(`${this.baseUrl}register`,userObj)
+    return this.http.post<any>(`${this.baseUrl}/register`,userObj)
   }
 
 
 
-  // LOGIN NA PAGINA COM DADOS EMAIL + PASSWORD
+  // LOGIN ON THE PAGE WITH EMAIL + PASSWORD
   login(userObj : User)
   {
-    return this.http.post<any>(`${this.baseUrl}login`,userObj)
+    return this.http.post<any>(`${this.baseUrl}/login`,userObj)
   }
 
+  // Check if a token exists in the local storage
   isLoggedIn(): boolean
   {
     return !!localStorage.getItem('token');
   }
 
+  // Clear the local storage
   signOut(){
     localStorage.clear();
-    this.router.navigate(['']);
   }
 
-  // JWT TOKEN Methods
+  // Decode the JWT token using the JwtHelperService
   decodedToken()
   {
     const jwtHelper = new JwtHelperService();
@@ -50,42 +52,50 @@ export class AuthService {
     return jwtHelper.decodeToken(token);
   }
 
+  // Store the access token in the local storage
   storeToken(tokenValue : string)
   {
     localStorage.setItem('token',tokenValue);
   }
 
+  // Store the refresh token in the local storage
   storeRefreshToken(tokenValue : string)
   {
     localStorage.setItem('refreshToken',tokenValue);
   }
 
+  // get the refresh token from the local storage
   getRefreshToken()
   {
     return localStorage.getItem('refreshToken');
   }
 
+  // get the access token from the local storage
   getToken()
   {
     return localStorage.getItem('token');
   }
 
+  // renew the token using the refresh token
   renewToken(tokenApi : token){
-    return this.http.post<any>(`${this.baseUrl}refresh`,tokenApi)
+    return this.http.post<any>(`${this.baseUrl}/refresh`,tokenApi)
   }
 
+  // get the user ID from the decoded token
   getIdFromToken(){
     if(this.userPayload){
       return this.userPayload.id;
     }
   }
 
+  // get the full name from the decoded token
   getFullNameFromToken(){
     if(this.userPayload){
       return this.userPayload.unique_name;
     }
   }
 
+  // get the role from the decoded token
   getRoleFromToken(){
     if(this.userPayload){
       return this.userPayload.role;

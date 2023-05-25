@@ -12,27 +12,33 @@ export class UserStoreService {
 
   constructor() { }
 
-  public getRole(){
+  // Get the observable for the user's role
+  public getRole() {
     return this.role$.asObservable();
   }
 
-  public setRole(role:string){
+  // Set the user's role
+  public setRole(role: string) {
     this.role$.next(role);
   }
 
-  public setId(id:number){
+  // Set the user's ID
+  public setId(id: number) {
     this.id$.next(id);
   }
 
-  public getFullName(){
+  // Get the observable for the user's full name
+  public getFullName() {
     return this.email$.asObservable();
   }
 
-  public setFullName(email:string){
+  // Set the user's full name
+  public setFullName(email: string) {
     this.email$.next(email);
   }
 
-  public getId(){
+  // Get the observable for the user's ID
+  public getId() {
     return this.id$.asObservable();
   }
 

@@ -1,4 +1,4 @@
-<div  class="album py-5 bg-body-tertiary">
+<div class="album py-5 bg-body-tertiary">
   <div class="container">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
       <div *ngFor="let recipe of recipes" class="col">
@@ -8,11 +8,12 @@
             <div class="card-body">
               <div *ngIf="recipe.description < 9 else readMore">
                 <h5 class="card-title">{{recipe.title}}</h5>
-                <p class="card-text" >{{recipe.description}}</p>
+                <p class="card-text">{{recipe.description}}</p>
               </div>
               <ng-template #readMore>
                 <h5 class="card-title">{{recipe.title}}</h5>
-                <p class="card-text" >{{recipe.description | slice: 0:38}}... <a style="font-style: italic; color: blue;">read more</a></p>
+                <p class="card-text">{{recipe.description | slice: 0:38}}... <a
+                    style="font-style: italic; color: blue;">read more</a></p>
               </ng-template>
               <div class="row">
                 <div class="col">

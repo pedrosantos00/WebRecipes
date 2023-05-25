@@ -41,7 +41,6 @@ import { FavListComponent } from './Components/profile/fav-list/fav-list.compone
     FilterRecipePipe,
     RecipeComponent,
     FavListComponent
-
   ],
   imports: [
     BrowserModule,
