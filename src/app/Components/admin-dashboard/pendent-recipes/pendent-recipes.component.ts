@@ -11,6 +11,7 @@ import { RecipeService } from 'src/app/Services/recipe.service';
 export class PendentRecipesComponent implements OnInit {
 
   recipes: any;
+  loadingRecipes: boolean = false;
   constructor(private recipeService: RecipeService, private router: Router) {
   }
 
@@ -21,6 +22,7 @@ export class PendentRecipesComponent implements OnInit {
 
   // get pending recipes
   async loadRecipes(): Promise<void> {
+    this.loadingRecipes = true;
     try {
       // Get pendent recipes from the service
       const res = await this.recipeService.getRecipeToApprove().toPromise();
@@ -29,6 +31,7 @@ export class PendentRecipesComponent implements OnInit {
       this.convertImg(this.recipes);
     } catch (error) {
     }
+    this.loadingRecipes = false;
   }
 
   // Convert image data to base64

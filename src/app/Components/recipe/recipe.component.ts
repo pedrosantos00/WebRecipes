@@ -61,7 +61,7 @@ export class RecipeComponent implements OnInit {
 
   // Get the recipe data
   getRecipe() {
-    this.recipeService.getRecipe(this.recipeId)
+    this.recipeService.getRecipe(0,0,this.recipeId)
       .subscribe(val => {
         this.recipe = val;
         this.convertImg(this.recipe);

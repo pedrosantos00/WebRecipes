@@ -26,22 +26,22 @@ export class RecipeService {
   }
 
   // get recipes / recipe by ID
-  getRecipe(id?: number): Observable<Recipe> {
+  getRecipe( startIndex? : Number , itemCount? : Number, id?: number): Observable<Recipe> {
     if (id == null || id == undefined) {
-      return this.http.get<Recipe>(`${this.baseUrl}`);
+      return this.http.get<Recipe>(`${this.baseUrl}?startIndex=${startIndex}&itemCount=${itemCount}`);
     } else {
       return this.http.get<Recipe>(`${this.baseUrl}/${id}`);
     }
   }
 
   //get recipes by user Id
-  getRecipesByUserId(userId: number): Observable<Recipe> {
-    return this.http.get<Recipe>(`${this.baseUrl}/user/${userId}`);
+  getRecipesByUserId(userId: number, startIndex? : Number , itemCount? : Number): Observable<Recipe> {
+    return this.http.get<Recipe>(`${this.baseUrl}/user/${userId}?startIndex=${startIndex}&itemCount=${itemCount}`);
   }
 
    //get recipes by Fav user Id
-  getFavRecipesByUserId(userId: number): Observable<Recipe> {
-    return this.http.get<Recipe>(`${this.baseUrl}/fav/user/${userId}`);
+  getFavRecipesByUserId(userId: number, startIndex? : Number , itemCount? : Number): Observable<Recipe> {
+    return this.http.get<Recipe>(`${this.baseUrl}/fav/user/${userId}?startIndex=${startIndex}&itemCount=${itemCount}`);
   }
 
   // get recipes waiting to approve

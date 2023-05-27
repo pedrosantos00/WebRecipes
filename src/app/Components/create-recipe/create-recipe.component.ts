@@ -133,7 +133,6 @@ export class CreateRecipeComponent implements OnInit {
     if (this.recipeForm.valid) {
       this.recipeService.createRecipe(recipe, this.userId).subscribe(
         (response) => {
-          window.location.reload();
           this.alert.success({ detail: "SUCCESS", summary: response?.message, duration: 5000 });
         },
         (error) => {

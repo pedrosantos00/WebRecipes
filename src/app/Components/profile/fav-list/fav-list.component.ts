@@ -14,6 +14,11 @@ export class FavListComponent implements OnInit {
 
   @Input() userId!: number;
   @Input() profileUserId!: number;
+  newRecipes : any;
+  startIndex : number = 0;
+  itemCount : number =5;
+  noMoreRecipes : boolean = false;
+  recipesLoad : boolean = false;
   //PIPES
 
   recipes: any;
@@ -29,13 +34,32 @@ export class FavListComponent implements OnInit {
 
   // Load favorite recipes for the user
   async loadFavRecipes(): Promise<void> {
+    this.recipesLoad = true;
     try {
-      const res = await this.recipeService.getFavRecipesByUserId(this.profileUserId).toPromise();
-      this.recipes = res;
-      this.convertImg(this.recipes);
-    } catch (error) {
-    }
+      const res = await this.recipeService.getFavRecipesByUserId(this.profileUserId,this.startIndex, this.itemCount).toPromise();
+      if(this.recipes == null) {
+        this.recipes = res;
+       this.convertImg(this.recipes);
+      }
+      else{
+        //Add more recipes to the list
+        this.newRecipes = res ;
+        // Remove Load more button
+        if(this.newRecipes == 0) {
+          this.noMoreRecipes = true;
+        }
+        this.convertImg(this.newRecipes);
+        this.recipes = this.recipes.concat(this.newRecipes);
+        this.newRecipes = null;
+      }
+      this.startIndex +=this.itemCount;
+      }
+      catch (error) {
+      }
+      this.recipesLoad = false;
   }
+
+
 
   // Convert the image data of each recipe to base64 format
   convertImg(recipes: Recipe[]) {
