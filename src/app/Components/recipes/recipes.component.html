@@ -56,7 +56,7 @@
         </a>
       </div>
     </div>
-    <button *ngIf="!noMoreRecipes" class="btn btn-primary mt-2" (click)="loadRecipes()" [disabled]="recipesLoad">
+    <button *ngIf="!noMoreRecipes" class="btn btn-primary mt-2" (click)="recipesLoader()" [disabled]="recipesLoad">
       <span *ngIf="recipesLoad" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
       <span *ngIf="!recipesLoad">Load More</span>
     </button>

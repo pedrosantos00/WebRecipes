@@ -32,8 +32,15 @@ export class RecipesComponent implements OnInit {
     // using this ( recipes-component) for the mainpage and for the profile personal recipes page, this algorithm is to check if is on the
     // mainpage or profile page to display the correct data
 
-    // FOR MAINPAGE
-    if (this.profileUserId == 0 || this.profileUserId == undefined || this.profileUserId == null) {
+    this.recipesLoader();
+
+    // check if its loggedin
+    this.isLoggedIn = this.auth.isLoggedIn();
+  }
+
+  recipesLoader() {
+     // FOR MAINPAGE
+     if (this.profileUserId == 0 || this.profileUserId == undefined || this.profileUserId == null) {
       this.loadRecipes();
     }
     // FOR PROFILE PAGE
@@ -41,9 +48,6 @@ export class RecipesComponent implements OnInit {
       this.userId = this.profileUserId
       this.loadPersonalRecipes(this.profileUserId);
     }
-
-    // check if its loggedin
-    this.isLoggedIn = this.auth.isLoggedIn();
   }
 
   // get personal recipes
