@@ -1,5 +1,6 @@
 # WebRecipes
-
+![image](https://github.com/pedrosantos00/WebRecipesApi/assets/62798656/f817df10-e50a-452a-9027-3686d1b528bc)
+![WhatsApp Image 2023-06-29 at 20 57 41](https://github.com/pedrosantos00/WebRecipesApi/assets/62798656/13b65edb-f9c6-4307-8382-4bcac29f5d0b)
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.4.
 
 ## Development server
