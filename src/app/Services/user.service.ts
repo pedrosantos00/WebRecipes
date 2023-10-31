@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 export class UserService {
 
 
-  private baseUrl: string = "recipewebsiteaps.azurewebsites.net/User";
+  private baseUrl: string = "https://recipewebsiteaps.azurewebsites.net/User";
   constructor(private http: HttpClient, private router: Router) { }
 
 
