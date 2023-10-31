@@ -10,7 +10,7 @@ import { token } from '../Models/token';
 })
 export class AuthService {
 
-  private baseUrl: string = "https://localhost:7145/User";
+  private baseUrl: string = "recipewebsiteaps.azurewebsites.net/User";
   private userPayload: any;
 
   constructor(private http: HttpClient, private router: Router)
